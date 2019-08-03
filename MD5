@@ -1,0 +1,16 @@
+6068c8301f95d37b6a7f9b2ee2d9a8bc *DESCRIPTION
+b5b2e20c75457107297b566908b8c29d *NAMESPACE
+984b8c4ec1347d8e014a62e119312780 *NEWS.md
+8e478bb1d8f50a367c521f9ca95d3961 *R/LOS_model.R
+0b33216b78546053aaf54a42ff2c2c9e *README.md
+b292a9776a0939d6db8b2697dc357adf *build/vignette.rds
+e357c5e85a2d030484ccf7ba00a9f98a *data/LOS_model.RData
+32b9ae1b37399bd75506c4ef26fcc18e *data/LOS_model.csv
+93b679b5f7837b22009d652af3fe1808 *inst/doc/LOS_model.R
+b87ab6cd8c450a8eb2f8e3a0bf0e3021 *inst/doc/LOS_model.Rmd
+233072ee561d8412587e32ae70e1b810 *inst/doc/LOS_model.html
+5a8765e1e5fc2b6f92f35a8483d31e81 *man/LOS_model.Rd
+f50113690400f34287e46147416cfb62 *man/figures/logo.png
+09ae99bae0b6c4badfcf4c540547f71a *tests/testthat.R
+bdd314e05d4cdb3d82723ad401677bac *tests/testthat/test-LOS_model.R
+b87ab6cd8c450a8eb2f8e3a0bf0e3021 *vignettes/LOS_model.Rmd
