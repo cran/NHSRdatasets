@@ -1,9 +1,10 @@
 Package: NHSRdatasets
 Type: Package
 Title: NHS and Healthcare Related Data for Education and Training
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(
           person("Chris", "Mainey", ,"chris.mainey@uhb.nhs.uk", c("aut", "cre"), comment = c(ORCID ="0000-0002-3018-6171")),
+          person("Tom", "Jemmett", ,"thomas.jemmett@nhs.net", "aut", comment = c(ORCID="0000-0002-6943-2990")),
           person("NHS-R community", role = "cph")
           )
 Maintainer: Chris Mainey <chris.mainey@uhb.nhs.uk>
@@ -14,12 +15,13 @@ LazyData: true
 RoxygenNote: 6.1.1
 Depends: R (>= 3.5.0)
 BugReports: https://github.com/nhs-r-community/NHSRdatasets/issues
-Suggests: dplyr, ggplot2, lme4, MASS, ModelMetrics, lmtest, testthat
-        (>= 2.1.0), covr, knitr, rmarkdown
+Suggests: dplyr, ggplot2, lme4, MASS, ModelMetrics, lmtest, rmarkdown,
+        scales, ggrepel, lubridate, tidyr, forcats, knitr
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2019-08-02 12:35:24 UTC; Christopher
+Packaged: 2019-09-27 10:21:43 UTC; Christopher
 Author: Chris Mainey [aut, cre] (<https://orcid.org/0000-0002-3018-6171>),
+  Tom Jemmett [aut] (<https://orcid.org/0000-0002-6943-2990>),
   NHS-R community [cph]
 Repository: CRAN
-Date/Publication: 2019-08-03 06:40:06 UTC
+Date/Publication: 2019-09-27 12:20:02 UTC
