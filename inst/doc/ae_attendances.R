@@ -1,4 +1,4 @@
-## ----setup, include = FALSE----------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -6,7 +6,7 @@ knitr::opts_chunk$set(
 
 options(tidyverse.quiet = TRUE)
 
-## ----load data, message=TRUE, warning=TRUE-------------------------------
+## ----load data, message=TRUE, warning=TRUE------------------------------------
 library(knitr)
 library(scales)
 library(ggrepel)
@@ -30,7 +30,7 @@ ae_attendances %>%
   # format as a table
   kable()
 
-## ----england performance-------------------------------------------------
+## ----england performance------------------------------------------------------
 england_performance <- ae_attendances %>%
   group_by(period) %>%
   summarise_at(vars(attendances, breaches), sum) %>%
@@ -47,7 +47,7 @@ england_performance %>%
   head(10) %>%
   kable()
 
-## ----england performance plot--------------------------------------------
+## ----england performance plot-------------------------------------------------
 ggplot(england_performance, aes(period, performance)) +
   geom_line() +
   geom_point() +
@@ -57,7 +57,7 @@ ggplot(england_performance, aes(period, performance)) +
        title = "NHS England A&E 4 Hour Performance",
        caption = "Source: NHS England Statistical Work Areas (OGL v3.0)")
 
-## ----england performance by type-----------------------------------------
+## ----england performance by type----------------------------------------------
 ae_attendances %>%
   group_by(period, type) %>%
   summarise_if(is.numeric, sum) %>%
@@ -74,7 +74,7 @@ ae_attendances %>%
        subtitle = "By Department Type",
        caption = "Source: NHS England Statistical Work Areas (OGL v3.0)")
 
-## ----performance_by_trust------------------------------------------------
+## ----performance_by_trust-----------------------------------------------------
 performance_by_trust <- ae_attendances %>%
   group_by(org_code, period) %>%
   # make sure that this trust has a type 1 department
@@ -90,7 +90,7 @@ performance_by_trust %>%
   head(10) %>%
   kable()
 
-## ----performance_by_trust_ranking----------------------------------------
+## ----performance_by_trust_ranking---------------------------------------------
 performance_by_trust_ranking <- performance_by_trust %>%
   summarise(performance = 1 - sum(breaches) / sum(attendances)) %>%
   arrange(performance) %>%
@@ -103,7 +103,7 @@ head(performance_by_trust_ranking, 5)
 print("Top 5")
 tail(performance_by_trust_ranking, 5)
 
-## ----performance_by_trust top 5 bottom 5 plot----------------------------
+## ----performance_by_trust top 5 bottom 5 plot---------------------------------
 performance_by_trust %>%
   ungroup() %>%
   mutate_at(vars(org_code), fct_relevel, performance_by_trust_ranking) %>%
@@ -121,7 +121,7 @@ performance_by_trust %>%
        subtitle = "Bottom 5/Top 5 over the whole 3 years",
        caption = "Source: NHS England Statistical Work Areas (OGL v3.0)")
 
-## ----bencmarking plot----------------------------------------------------
+## ----bencmarking plot---------------------------------------------------------
 ae_attendances %>%
   filter(period == last(period)) %>%
   group_by(org_code) %>%
