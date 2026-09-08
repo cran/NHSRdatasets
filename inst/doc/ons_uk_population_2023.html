@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Dataset: ONS UK population 2023</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Dataset: ONS UK population 2023</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(NHSRdatasets)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>ons_uk_population_2023 <span class="ot">&lt;-</span> NHSRdatasets<span class="sc">::</span>ons_uk_population_2023</span></code></pre></div>
+<p>This vignette details why the <code>ons_uk_population_2023</code>
+dataset was created and how to load it.</p>
+<div id="ons-uk-population-2023" class="section level1">
+<h1>ONS UK Population 2023</h1>
+<p>This dataset was added in October 2024 as part of Hacktoberfest The
+original data was sourced from the <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/populationestimatesforukenglandandwalesscotlandandnorthernireland">ONS
+mid year estimates of population for England and Wales</a> and was
+tidied using the code in
+<code>vignette(&quot;create_ons_uk_population_2023&quot;)</code>.</p>
+<p>The dataset contains:</p>
+<ul>
+<li><strong>sex:</strong> character for females and males</li>
+<li><strong>code:</strong> character code for areas which corresponds to
+the Name column</li>
+<li><strong>name:</strong> character for areas in the UK and in this
+dataset has been restricted to Countries and grouped Countries (United
+Kingdom and Great Britain)</li>
+<li><strong>geography:</strong> character detail on area and in this
+dataset is just Country</li>
+<li><strong>age:</strong> character with age in years from 0 to 90+</li>
+<li><strong>count:</strong> number referring to the count of
+population</li>
+</ul>
+<div id="small-charts-exploration" class="section level2">
+<h2>Small charts exploration</h2>
+<p>A bar chart to see all the Regions using <code>ggplot2</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>ons_uk_population_2023 <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">&quot;UNITED KINGDOM&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(ggplot2<span class="sc">::</span><span class="fu">aes</span>(age, count, <span class="at">colour =</span> sex)) <span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">facet_wrap</span>(<span class="sc">~</span>sex)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+<p>Looking at the chart there seems to be a spike in numbers towards the
+latter ages.</p>
+<p>Scanning the ages they are in order so looking at the last 5 ages for
+both sexes, male and female</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>ons_uk_population_2023 <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(name <span class="sc">==</span> <span class="st">&quot;UNITED KINGDOM&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">slice_tail</span>(<span class="at">n =</span> <span class="dv">5</span>, <span class="at">by =</span> sex)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 × 6</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt;    sex     code      name           geography age    count</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;          &lt;chr&gt;     &lt;chr&gt;  &lt;dbl&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt;  1 females K02000001 UNITED KINGDOM Country   86    145357</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt;  2 females K02000001 UNITED KINGDOM Country   87    130223</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt;  3 females K02000001 UNITED KINGDOM Country   88    114850</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt;  4 females K02000001 UNITED KINGDOM Country   89     98220</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt;  5 females K02000001 UNITED KINGDOM Country   90+   408216</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt;  6 males   K02000001 UNITED KINGDOM Country   86    102785</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt;  7 males   K02000001 UNITED KINGDOM Country   87     88388</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt;  8 males   K02000001 UNITED KINGDOM Country   88     75138</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt;  9 males   K02000001 UNITED KINGDOM Country   89     61154</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt; 10 males   K02000001 UNITED KINGDOM Country   90+   203503</span></span></code></pre></div>
+<p>we can see that there is an unusual increase in numbers for the 90+
+age group for both males and females</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

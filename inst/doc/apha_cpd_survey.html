@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Dataset: AphA CPD Survey</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Dataset: AphA CPD Survey</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(NHSRdatasets)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; Warning: package &#39;tibble&#39; was built under R version 4.5.3</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt; Warning: package &#39;purrr&#39; was built under R version 4.5.3</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;purrr&#39;</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:scales&#39;:</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt;     discard</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>apha_cpd_survey <span class="ot">&lt;-</span> NHSRdatasets<span class="sc">::</span>apha_cpd_survey</span></code></pre></div>
+<p>This vignette details why the <code>apha_cpd_survey</code> dataset
+was created and how to load it with some details on how to view some of
+the data. For code used to extract and clean the data can be found in
+<code>vignette(&quot;create_apha_cpd_survey&quot;)</code>.</p>
+<p>The dataset contains:</p>
+<ul>
+<li><strong>respondent_id:</strong> integer unique id for each
+respondent</li>
+<li><strong>form_started_dttm:</strong> date time</li>
+<li><strong>form_ended_dttm:</strong> date time</li>
+<li><strong>q00a_age_bracket_cat:</strong> character of age
+brackets</li>
+<li><strong>q01a_gender_cat:</strong> character for Male, Female and
+Prefer not to say</li>
+<li><strong>q02a_max_education_level_cat:</strong> character</li>
+<li><strong>q03a_analyst_years_n:</strong> character</li>
+<li><strong>q04a_role_description_cat:</strong> character freetext</li>
+<li><strong>q05a_afc_band_cat:</strong> character</li>
+<li><strong>q06a_current_org_years_cat:</strong> character</li>
+<li><strong>q07a_future_health_work_cat:</strong> character</li>
+<li><strong>q08a_apha_aware_ind:</strong> character</li>
+<li><strong>q09a_apha_registered_cat:</strong> character</li>
+<li><strong>q10a_other_org_member_txt:</strong> character</li>
+<li><strong>q11a_nhs_cpd_aware_cat:</strong> character</li>
+<li><strong>q12a_cpd_time_at_work_cat:</strong> character</li>
+<li><strong>q13a_cpd_outside_work_ind:</strong> character</li>
+<li><strong>q13b_cpd_outside_work_days_txt:</strong> character
+freetext</li>
+<li><strong>q14a_mgr_cpd_supportive_cat:</strong> character</li>
+<li><strong>q15a_mgr_cpd_more_support_ind:</strong> character</li>
+<li><strong>q16a_org_cpd_supportive_cat:</strong> character</li>
+<li><strong>q17a_org_cpd_budget_cat:</strong> character</li>
+<li><strong>q17b_org_cpd_budget_txt:</strong> character freetext</li>
+<li><strong>q18a_org_study_leave_ind:</strong> character</li>
+<li><strong>q18b_org_study_leave_days_txt:</strong> character
+freetext</li>
+<li><strong>q19a_mgr_cpd_discuss_freq_cat:</strong> character</li>
+<li><strong>q20a_cpd_opps_nhs_intranet_ind:</strong> character</li>
+<li><strong>q20b_cpd_opps_org_website_ind:</strong> character</li>
+<li><strong>q20c_cpd_opps_blogs_ind:</strong> character</li>
+<li><strong>q20d_cpd_opps_twitter_ind:</strong> character</li>
+<li><strong>q20e_cpd_opps_linkedin_ind:</strong> character</li>
+<li><strong>q20f_cpd_opps_word_of_mouth_ind:</strong> character</li>
+<li><strong>q20g_cpd_opps_apha_website_ind:</strong> character</li>
+<li><strong>q20h_cpd_opps_other_txt:</strong> character freetext</li>
+<li><strong>q21a_cpd_opps_sources_txt:</strong> character freetext</li>
+<li><strong>q22a_org_nhs_type_cat:</strong> character</li>
+<li><strong>q23a_org_analyst_team_size_cat:</strong> character</li>
+<li><strong>q24a_org_analytics_influence_cat:</strong> character</li>
+</ul>
+<div id="association-of-healthcare-analysts-continuous-professional-development-survey-data" class="section level2">
+<h2>Association of Healthcare Analysts Continuous Professional
+Development survey data</h2>
+<p>Data was provided with permission from Rony Arafin in 2024, the then
+president of AphA, to include this dataset as part of training.</p>
+<p>The data had been collected through a survey of analysts which was
+analysed and published by Association of Professional Healthcare
+Analysts (AphA),
+ltnws/nhs-at-risk-of-losing-a-generation-of-data-analysts/ (Accessed
+January 2024). This is a good example of real survey collected data as
+it includes some standardised text and some freetext with missing values
+and combinations of numbers and text in some fields.</p>
+<p>There are also 38 columns of data with partial questions which are
+related, for example, Q20 has parts a, b, c, d, e, f, g and h.</p>
+<p>This data has a lot of structure to it for text based analysis but is
+a good dataset for practising data cleaning.</p>
+</div>
+<div id="labels" class="section level2">
+<h2>Labels</h2>
+<p>The data has labels as well as column headers which can be seen in
+the RStudio environment panel as <code>attr(*, &quot;label&quot;)= chr</code></p>
+<p>To view the attribute/label for one column</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">attributes</span>(apha_cpd_survey<span class="sc">$</span>q00a_age_bracket_cat)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt; $label</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; [1] &quot;What&#39;s your age?&quot;</span></span></code></pre></div>
+<p>To view all labels with the headers</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="at">variable =</span> <span class="fu">names</span>(apha_cpd_survey),</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="at">variable_label =</span> <span class="fu">map_chr</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    apha_cpd_survey,</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>    <span class="sc">~</span> <span class="fu">attr</span>(.x, <span class="st">&quot;label&quot;</span>) <span class="sc">%||%</span> <span class="cn">NA_character_</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  ),</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  <span class="at">value_labels =</span> <span class="fu">map</span>(</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>    apha_cpd_survey,</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>    <span class="sc">~</span> <span class="fu">attr</span>(.x, <span class="st">&quot;labels&quot;</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>  )</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>)</span></code></pre></div>
+<p>To view just the data a bit more cleanly</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">glimpse</span>(apha_cpd_survey)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt; Rows: 237</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; Columns: 38</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; $ respondent_id                    &lt;int&gt; 195676290, 195698438, 195698479, 1956…</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; $ form_started_dttm                &lt;dttm&gt; 2022-07-15 10:44:04, 2022-07-15 14:4…</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; $ form_ended_dttm                  &lt;dttm&gt; 2022-07-15 10:47:53, 2022-07-15 14:4…</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; $ q00a_age_bracket_cat             &lt;chr&gt; &quot;40~44&quot;, &quot;50~54&quot;, &quot;25~29&quot;, &quot;40~44&quot;, &quot;…</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; $ q01a_gender_cat                  &lt;chr&gt; &quot;Male&quot;, &quot;Female&quot;, &quot;Male&quot;, &quot;Male&quot;, &quot;Ma…</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; $ q02a_max_education_level_cat     &lt;chr&gt; &quot;Postgraduate degree&quot;, &quot;Postgraduate …</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; $ q03a_analyst_years_n             &lt;chr&gt; &quot;5&quot;, &quot;18&quot;, &quot;0.7&quot;, &quot;7&quot;, &quot;3&quot;, &quot;23&quot;, &quot;10…</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; $ q04a_role_description_cat        &lt;chr&gt; &quot;economist&quot;, &quot;Data analyst&quot;, &quot;Data an…</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; $ q05a_afc_band_cat                &lt;chr&gt; &quot;Band 9 or VSM&quot;, &quot;Band 6 or 7&quot;, &quot;Band…</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt; $ q06a_current_org_years_cat       &lt;chr&gt; &quot;6~10 years&quot;, &quot;6~10 years&quot;, &quot;Less tha…</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt; $ q07a_future_health_work_cat      &lt;chr&gt; &quot;Very likely&quot;, &quot;Undecided&quot;, &quot;Somewhat…</span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt; $ q08a_apha_aware_ind              &lt;chr&gt; &quot;Yes&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;Y…</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt; $ q09a_apha_registered_cat         &lt;chr&gt; &quot;Yes, I am a leading practitioner&quot;, &quot;…</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt; $ q10a_other_org_member_txt        &lt;chr&gt; &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;…</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#&gt; $ q11a_nhs_cpd_aware_cat           &lt;chr&gt; &quot;Yes – would like to know more&quot;, &quot;Yes…</span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#&gt; $ q12a_cpd_time_at_work_cat        &lt;chr&gt; &quot;Often — very few occasions where tra…</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co">#&gt; $ q13a_cpd_outside_work_ind        &lt;chr&gt; &quot;Yes&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;,…</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="co">#&gt; $ q13b_cpd_outside_work_days_txt   &lt;chr&gt; &quot;-&quot;, &quot;10&quot;, &quot;-&quot;, &quot;-&quot;, &quot;-&quot;, &quot;-&quot;, &quot;-&quot;, &quot;…</span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a><span class="co">#&gt; $ q14a_mgr_cpd_supportive_cat      &lt;chr&gt; &quot;Not at all – no discussion on develo…</span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="co">#&gt; $ q15a_mgr_cpd_more_support_ind    &lt;chr&gt; &quot;Yes&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;Ye…</span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="co">#&gt; $ q16a_org_cpd_supportive_cat      &lt;chr&gt; &quot;Very supportive – e.g., shares train…</span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="co">#&gt; $ q17a_org_cpd_budget_cat          &lt;chr&gt; &quot;No&quot;, &quot;Don&#39;t know&quot;, &quot;Don&#39;t know&quot;, &quot;No…</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="co">#&gt; $ q17b_org_cpd_budget_txt          &lt;chr&gt; &quot;-&quot;, &quot;-&quot;, &quot;-&quot;, &quot;-&quot;, &quot;-&quot;, &quot;-&quot;, &quot;-&quot;, &quot;-…</span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a><span class="co">#&gt; $ q18a_org_study_leave_ind         &lt;chr&gt; &quot;Yes&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;,…</span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a><span class="co">#&gt; $ q18b_org_study_leave_days_txt    &lt;chr&gt; &quot;-&quot;, &quot;Don&#39;t know&quot;, &quot;-&quot;, &quot;-&quot;, &quot;-&quot;, &quot;-&quot;…</span></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a><span class="co">#&gt; $ q19a_mgr_cpd_discuss_freq_cat    &lt;chr&gt; &quot;Only when I request&quot;, &quot;Only when app…</span></span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a><span class="co">#&gt; $ q20a_cpd_opps_nhs_intranet_ind   &lt;chr&gt; &quot;No&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;Yes&quot;…</span></span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a><span class="co">#&gt; $ q20b_cpd_opps_org_website_ind    &lt;chr&gt; &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Yes&quot;, …</span></span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a><span class="co">#&gt; $ q20c_cpd_opps_blogs_ind          &lt;chr&gt; &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, …</span></span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a><span class="co">#&gt; $ q20d_cpd_opps_twitter_ind        &lt;chr&gt; &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Yes&quot;,…</span></span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a><span class="co">#&gt; $ q20e_cpd_opps_linkedin_ind       &lt;chr&gt; &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;…</span></span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a><span class="co">#&gt; $ q20f_cpd_opps_word_of_mouth_ind  &lt;chr&gt; &quot;Yes&quot;, &quot;Yes&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;…</span></span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a><span class="co">#&gt; $ q20g_cpd_opps_apha_website_ind   &lt;chr&gt; &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;, &quot;No&quot;, &quot;Yes&quot;…</span></span>
+<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a><span class="co">#&gt; $ q20h_cpd_opps_other_txt          &lt;chr&gt; &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;No&quot;, &quot;Skills…</span></span>
+<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a><span class="co">#&gt; $ q21a_cpd_opps_sources_txt        &lt;chr&gt; &quot;-&quot;, &quot;https://www.aphanalysts.org/&quot;, …</span></span>
+<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a><span class="co">#&gt; $ q22a_org_nhs_type_cat            &lt;chr&gt; &quot;CSU&quot;, &quot;Trust (hospitals, mental heal…</span></span>
+<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a><span class="co">#&gt; $ q23a_org_analyst_team_size_cat   &lt;chr&gt; &quot;3 ~ 5 (FTEs)&quot;, &quot;Below 3 (Full Time E…</span></span>
+<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a><span class="co">#&gt; $ q24a_org_analytics_influence_cat &lt;chr&gt; &quot;Yes – somewhat&quot;, &quot;Yes – somewhat&quot;, &quot;…</span></span></code></pre></div>
+</div>
+<div id="categories-for-columns" class="section level2">
+<h2>Categories for columns</h2>
+<p>As there are so many columns finding the categories or unique data is
+possible with using a function and a <code>purrr</code> loop:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Simple function that uses base R unique() to return the unique data from a column</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>unique_data <span class="ot">&lt;-</span> <span class="cf">function</span>(data, column) {</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">unique</span>(data<span class="sc">$</span>column)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>}</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co"># maps across all the columns and gives unique data</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">imap</span>(</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>  apha_cpd_survey,</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>  <span class="sc">~</span> <span class="fu">unique</span>(.x)</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>)</span></code></pre></div>
+<p>As some columns have freetext or lots of unique data (as for date
+time columns) not all of this will be useful so restricting to only
+those that are known to have a few categories will be more helpful</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> apha_cpd_survey <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="co"># unselect the columns with dttm in the name</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">!</span>dplyr<span class="sc">::</span><span class="fu">ends_with</span>(<span class="st">&quot;dttm&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="co"># unselect respondent_id as that is a unique number</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>respondent_id) <span class="sc">|&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  <span class="co"># freetext columns</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>    q04a_role_description_cat,</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>    q13b_cpd_outside_work_days_txt,</span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>    q17b_org_cpd_budget_txt,</span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>    q18b_org_study_leave_days_txt,</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>    q20h_cpd_opps_other_txt,</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>    q21a_cpd_opps_sources_txt</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>  ))</span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co"># Rerun the purrr loop to see the data</span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>purrr<span class="sc">::</span><span class="fu">imap</span>(</span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a>  data,</span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>  <span class="sc">~</span> <span class="fu">unique</span>(.x)</span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a>)</span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="co">#&gt; $q00a_age_bracket_cat</span></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;40~44&quot;        &quot;50~54&quot;        &quot;25~29&quot;        &quot;45~49&quot;        &quot;30~34&quot;       </span></span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a><span class="co">#&gt;  [6] &quot;35~39&quot;        &quot;18~24&quot;        &quot;65 and above&quot; &quot;55~59&quot;        &quot;60~64&quot;       </span></span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a><span class="co">#&gt; $q01a_gender_cat</span></span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Male&quot;              &quot;Female&quot;            &quot;Prefer not to say&quot;</span></span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a><span class="co">#&gt; $q02a_max_education_level_cat</span></span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Postgraduate degree&quot;                        </span></span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a><span class="co">#&gt; [2] &quot;Bachelor&#39;s degree&quot;                          </span></span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a><span class="co">#&gt; [3] &quot;A and AS level or equivalent qualifications&quot;</span></span>
+<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a><span class="co">#&gt; [4] &quot;Other qualifications&quot;                       </span></span>
+<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a><span class="co">#&gt; [5] &quot;GCSE or equivalent qualifications&quot;          </span></span>
+<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a><span class="co">#&gt; [6] &quot;Apprenticeships&quot;                            </span></span>
+<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-36"><a href="#cb6-36" tabindex="-1"></a><span class="co">#&gt; $q03a_analyst_years_n</span></span>
+<span id="cb6-37"><a href="#cb6-37" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;5&quot;        &quot;18&quot;       &quot;0.7&quot;      &quot;7&quot;        &quot;3&quot;        &quot;23&quot;      </span></span>
+<span id="cb6-38"><a href="#cb6-38" tabindex="-1"></a><span class="co">#&gt;  [7] &quot;10&quot;       &quot;4&quot;        &quot;1&quot;        &quot;9&quot;        &quot;8&quot;        &quot;20&quot;      </span></span>
+<span id="cb6-39"><a href="#cb6-39" tabindex="-1"></a><span class="co">#&gt; [13] &quot;35&quot;       &quot;6&quot;        &quot;14&quot;       &quot;15&quot;       &quot;2&quot;        &quot;22&quot;      </span></span>
+<span id="cb6-40"><a href="#cb6-40" tabindex="-1"></a><span class="co">#&gt; [19] &quot;19&quot;       &quot;17&quot;       &quot;30&quot;       &quot;13&quot;       &quot;16&quot;       &quot;1.5&quot;     </span></span>
+<span id="cb6-41"><a href="#cb6-41" tabindex="-1"></a><span class="co">#&gt; [25] &quot;12&quot;       &quot;25&quot;       &quot;5.5&quot;      &quot;0.5&quot;      &quot;-&quot;        &quot;21&quot;      </span></span>
+<span id="cb6-42"><a href="#cb6-42" tabindex="-1"></a><span class="co">#&gt; [31] &quot;2.5&quot;      &quot;6.5&quot;      &quot;36&quot;       &quot;27&quot;       &quot;11&quot;       &quot;34&quot;      </span></span>
+<span id="cb6-43"><a href="#cb6-43" tabindex="-1"></a><span class="co">#&gt; [37] &quot;24&quot;       &quot;32&quot;       &quot;1 ~2&quot;     &quot;28&quot;       &quot;41&quot;       &quot;0&quot;       </span></span>
+<span id="cb6-44"><a href="#cb6-44" tabindex="-1"></a><span class="co">#&gt; [43] &quot;4.5&quot;      &quot;6 years&quot;  &quot;29&quot;       &quot;7+ years&quot;</span></span>
+<span id="cb6-45"><a href="#cb6-45" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-46"><a href="#cb6-46" tabindex="-1"></a><span class="co">#&gt; $q05a_afc_band_cat</span></span>
+<span id="cb6-47"><a href="#cb6-47" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;Band 9 or VSM&quot;                                                </span></span>
+<span id="cb6-48"><a href="#cb6-48" tabindex="-1"></a><span class="co">#&gt;  [2] &quot;Band 6 or 7&quot;                                                  </span></span>
+<span id="cb6-49"><a href="#cb6-49" tabindex="-1"></a><span class="co">#&gt;  [3] &quot;Band 5 and below&quot;                                             </span></span>
+<span id="cb6-50"><a href="#cb6-50" tabindex="-1"></a><span class="co">#&gt;  [4] &quot;Band 8a or 8b&quot;                                                </span></span>
+<span id="cb6-51"><a href="#cb6-51" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;Band 8c or 8d&quot;                                                </span></span>
+<span id="cb6-52"><a href="#cb6-52" tabindex="-1"></a><span class="co">#&gt;  [6] &quot;We are not graded in the US&quot;                                  </span></span>
+<span id="cb6-53"><a href="#cb6-53" tabindex="-1"></a><span class="co">#&gt;  [7] &quot;Band B Senior analyst, approx gd7&quot;                            </span></span>
+<span id="cb6-54"><a href="#cb6-54" tabindex="-1"></a><span class="co">#&gt;  [8] &quot;Prefer not to say&quot;                                            </span></span>
+<span id="cb6-55"><a href="#cb6-55" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;-&quot;                                                            </span></span>
+<span id="cb6-56"><a href="#cb6-56" tabindex="-1"></a><span class="co">#&gt; [10] &quot;Local authority public health&quot;                                </span></span>
+<span id="cb6-57"><a href="#cb6-57" tabindex="-1"></a><span class="co">#&gt; [11] &quot;Local Authority Hay Band C (37k-43k)&quot;                         </span></span>
+<span id="cb6-58"><a href="#cb6-58" tabindex="-1"></a><span class="co">#&gt; [12] &quot;Independent Provider so no grade - Senior Performance Analyst&quot;</span></span>
+<span id="cb6-59"><a href="#cb6-59" tabindex="-1"></a><span class="co">#&gt; [13] &quot;Public Health Intelligence Manager&quot;                           </span></span>
+<span id="cb6-60"><a href="#cb6-60" tabindex="-1"></a><span class="co">#&gt; [14] &quot;GRADE E LOCAL GOVERNMENT&quot;                                     </span></span>
+<span id="cb6-61"><a href="#cb6-61" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-62"><a href="#cb6-62" tabindex="-1"></a><span class="co">#&gt; $q06a_current_org_years_cat</span></span>
+<span id="cb6-63"><a href="#cb6-63" tabindex="-1"></a><span class="co">#&gt; [1] &quot;6~10 years&quot;         &quot;Less than 1 year&quot;   &quot;More than 10 years&quot;</span></span>
+<span id="cb6-64"><a href="#cb6-64" tabindex="-1"></a><span class="co">#&gt; [4] &quot;3~5 years&quot;          &quot;1~2 years&quot;         </span></span>
+<span id="cb6-65"><a href="#cb6-65" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-66"><a href="#cb6-66" tabindex="-1"></a><span class="co">#&gt; $q07a_future_health_work_cat</span></span>
+<span id="cb6-67"><a href="#cb6-67" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Very likely&quot;       &quot;Undecided&quot;         &quot;Somewhat likely&quot;  </span></span>
+<span id="cb6-68"><a href="#cb6-68" tabindex="-1"></a><span class="co">#&gt; [4] &quot;Very unlikely&quot;     &quot;Somewhat unlikely&quot;</span></span>
+<span id="cb6-69"><a href="#cb6-69" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-70"><a href="#cb6-70" tabindex="-1"></a><span class="co">#&gt; $q08a_apha_aware_ind</span></span>
+<span id="cb6-71"><a href="#cb6-71" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Yes&quot; &quot;No&quot; </span></span>
+<span id="cb6-72"><a href="#cb6-72" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-73"><a href="#cb6-73" tabindex="-1"></a><span class="co">#&gt; $q09a_apha_registered_cat</span></span>
+<span id="cb6-74"><a href="#cb6-74" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Yes, I am a leading practitioner&quot;                            </span></span>
+<span id="cb6-75"><a href="#cb6-75" tabindex="-1"></a><span class="co">#&gt; [2] &quot;Yes, I am a practitioner&quot;                                    </span></span>
+<span id="cb6-76"><a href="#cb6-76" tabindex="-1"></a><span class="co">#&gt; [3] &quot;Yes, I’m an associate practitioner&quot;                          </span></span>
+<span id="cb6-77"><a href="#cb6-77" tabindex="-1"></a><span class="co">#&gt; [4] &quot;Not yet, but I am planning to be professionally registered&quot;  </span></span>
+<span id="cb6-78"><a href="#cb6-78" tabindex="-1"></a><span class="co">#&gt; [5] &quot;No, and I am not planning on being professionally registered&quot;</span></span>
+<span id="cb6-79"><a href="#cb6-79" tabindex="-1"></a><span class="co">#&gt; [6] &quot;Yes, I am an advanced practitioner&quot;                          </span></span>
+<span id="cb6-80"><a href="#cb6-80" tabindex="-1"></a><span class="co">#&gt; [7] &quot;Yes, I am a senior practitioner&quot;                             </span></span>
+<span id="cb6-81"><a href="#cb6-81" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-82"><a href="#cb6-82" tabindex="-1"></a><span class="co">#&gt; $q10a_other_org_member_txt</span></span>
+<span id="cb6-83"><a href="#cb6-83" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;No&quot;                                                                         </span></span>
+<span id="cb6-84"><a href="#cb6-84" tabindex="-1"></a><span class="co">#&gt;  [2] &quot;Royal Statistical Society&quot;                                                  </span></span>
+<span id="cb6-85"><a href="#cb6-85" tabindex="-1"></a><span class="co">#&gt;  [3] &quot;Faculty of Clinical Informatics&quot;                                            </span></span>
+<span id="cb6-86"><a href="#cb6-86" tabindex="-1"></a><span class="co">#&gt;  [4] &quot;BCS&quot;                                                                        </span></span>
+<span id="cb6-87"><a href="#cb6-87" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;FEDIP&quot;                                                                      </span></span>
+<span id="cb6-88"><a href="#cb6-88" tabindex="-1"></a><span class="co">#&gt;  [6] &quot;HIMSS, AMIA, ANIA&quot;                                                          </span></span>
+<span id="cb6-89"><a href="#cb6-89" tabindex="-1"></a><span class="co">#&gt;  [7] &quot;FCI&quot;                                                                        </span></span>
+<span id="cb6-90"><a href="#cb6-90" tabindex="-1"></a><span class="co">#&gt;  [8] &quot;ICAEW and HFMA (I&#39;m also a qualified accountant)&quot;                           </span></span>
+<span id="cb6-91"><a href="#cb6-91" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;FEDIP and BCS&quot;                                                              </span></span>
+<span id="cb6-92"><a href="#cb6-92" tabindex="-1"></a><span class="co">#&gt; [10] &quot;IET&quot;                                                                        </span></span>
+<span id="cb6-93"><a href="#cb6-93" tabindex="-1"></a><span class="co">#&gt; [11] &quot;NHSR Community &quot;                                                            </span></span>
+<span id="cb6-94"><a href="#cb6-94" tabindex="-1"></a><span class="co">#&gt; [12] &quot;ISPOR&quot;                                                                      </span></span>
+<span id="cb6-95"><a href="#cb6-95" tabindex="-1"></a><span class="co">#&gt; [13] &quot;Yes (please specify):&quot;                                                      </span></span>
+<span id="cb6-96"><a href="#cb6-96" tabindex="-1"></a><span class="co">#&gt; [14] &quot;Faculty of Public Health&quot;                                                   </span></span>
+<span id="cb6-97"><a href="#cb6-97" tabindex="-1"></a><span class="co">#&gt; [15] &quot;The OR Society&quot;                                                             </span></span>
+<span id="cb6-98"><a href="#cb6-98" tabindex="-1"></a><span class="co">#&gt; [16] &quot;RSS (Royal Statistical Society) and RSPH (Royal Society for Public Health) &quot;</span></span>
+<span id="cb6-99"><a href="#cb6-99" tabindex="-1"></a><span class="co">#&gt; [17] &quot;Institute of Mathematics and its Applications&quot;                              </span></span>
+<span id="cb6-100"><a href="#cb6-100" tabindex="-1"></a><span class="co">#&gt; [18] &quot;operational research society&quot;                                               </span></span>
+<span id="cb6-101"><a href="#cb6-101" tabindex="-1"></a><span class="co">#&gt; [19] &quot;Association of Project Management because I have a hybrid career &quot;          </span></span>
+<span id="cb6-102"><a href="#cb6-102" tabindex="-1"></a><span class="co">#&gt; [20] &quot;-&quot;                                                                          </span></span>
+<span id="cb6-103"><a href="#cb6-103" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-104"><a href="#cb6-104" tabindex="-1"></a><span class="co">#&gt; $q11a_nhs_cpd_aware_cat</span></span>
+<span id="cb6-105"><a href="#cb6-105" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Yes – would like to know more&quot; &quot;Not at all&quot;                   </span></span>
+<span id="cb6-106"><a href="#cb6-106" tabindex="-1"></a><span class="co">#&gt; [3] &quot;Fully aware&quot;                  </span></span>
+<span id="cb6-107"><a href="#cb6-107" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-108"><a href="#cb6-108" tabindex="-1"></a><span class="co">#&gt; $q12a_cpd_time_at_work_cat</span></span>
+<span id="cb6-109"><a href="#cb6-109" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Often — very few occasions where training has been refused due to budget, capacity, or any other reason&quot;               </span></span>
+<span id="cb6-110"><a href="#cb6-110" tabindex="-1"></a><span class="co">#&gt; [2] &quot;Rarely&quot;                                                                                                                </span></span>
+<span id="cb6-111"><a href="#cb6-111" tabindex="-1"></a><span class="co">#&gt; [3] &quot;Sometimes — depending on team capacity&quot;                                                                                </span></span>
+<span id="cb6-112"><a href="#cb6-112" tabindex="-1"></a><span class="co">#&gt; [4] &quot;Always — study leave available and not refused on application, no issues negotiating time for professional development&quot;</span></span>
+<span id="cb6-113"><a href="#cb6-113" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-114"><a href="#cb6-114" tabindex="-1"></a><span class="co">#&gt; $q13a_cpd_outside_work_ind</span></span>
+<span id="cb6-115"><a href="#cb6-115" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Yes&quot; &quot;No&quot;  &quot;-&quot;  </span></span>
+<span id="cb6-116"><a href="#cb6-116" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-117"><a href="#cb6-117" tabindex="-1"></a><span class="co">#&gt; $q14a_mgr_cpd_supportive_cat</span></span>
+<span id="cb6-118"><a href="#cb6-118" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Not at all – no discussion on development needs&quot;                                                    </span></span>
+<span id="cb6-119"><a href="#cb6-119" tabindex="-1"></a><span class="co">#&gt; [2] &quot;Somewhat – occasionally has conversations with me on my development needs&quot;                          </span></span>
+<span id="cb6-120"><a href="#cb6-120" tabindex="-1"></a><span class="co">#&gt; [3] &quot;Very supportive – actively supports through regular meetings,  facilitates training and development&quot;</span></span>
+<span id="cb6-121"><a href="#cb6-121" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-122"><a href="#cb6-122" tabindex="-1"></a><span class="co">#&gt; $q15a_mgr_cpd_more_support_ind</span></span>
+<span id="cb6-123"><a href="#cb6-123" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Yes&quot; &quot;No&quot; </span></span>
+<span id="cb6-124"><a href="#cb6-124" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-125"><a href="#cb6-125" tabindex="-1"></a><span class="co">#&gt; $q16a_org_cpd_supportive_cat</span></span>
+<span id="cb6-126"><a href="#cb6-126" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Very supportive – e.g., shares training/secondment opportunities, provides funding for training, provides a mentor/study leave etc&quot;</span></span>
+<span id="cb6-127"><a href="#cb6-127" tabindex="-1"></a><span class="co">#&gt; [2] &quot;Not at all&quot;                                                                                                                        </span></span>
+<span id="cb6-128"><a href="#cb6-128" tabindex="-1"></a><span class="co">#&gt; [3] &quot;Somewhat – policy in place, occasional reminder of opportunities&quot;                                                                  </span></span>
+<span id="cb6-129"><a href="#cb6-129" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-130"><a href="#cb6-130" tabindex="-1"></a><span class="co">#&gt; $q17a_org_cpd_budget_cat</span></span>
+<span id="cb6-131"><a href="#cb6-131" tabindex="-1"></a><span class="co">#&gt; [1] &quot;No&quot;         &quot;Don&#39;t know&quot; &quot;Yes&quot;       </span></span>
+<span id="cb6-132"><a href="#cb6-132" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-133"><a href="#cb6-133" tabindex="-1"></a><span class="co">#&gt; $q18a_org_study_leave_ind</span></span>
+<span id="cb6-134"><a href="#cb6-134" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Yes&quot; &quot;No&quot;  &quot;-&quot;  </span></span>
+<span id="cb6-135"><a href="#cb6-135" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-136"><a href="#cb6-136" tabindex="-1"></a><span class="co">#&gt; $q19a_mgr_cpd_discuss_freq_cat</span></span>
+<span id="cb6-137"><a href="#cb6-137" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Only when I request&quot;                                                             </span></span>
+<span id="cb6-138"><a href="#cb6-138" tabindex="-1"></a><span class="co">#&gt; [2] &quot;Only when appraisals are due&quot;                                                    </span></span>
+<span id="cb6-139"><a href="#cb6-139" tabindex="-1"></a><span class="co">#&gt; [3] &quot;Not at all&quot;                                                                      </span></span>
+<span id="cb6-140"><a href="#cb6-140" tabindex="-1"></a><span class="co">#&gt; [4] &quot;Occasionally – formal or informally&quot;                                             </span></span>
+<span id="cb6-141"><a href="#cb6-141" tabindex="-1"></a><span class="co">#&gt; [5] &quot;Regularly – formal/ agreed times throughout the year (in addition to appraisals)&quot;</span></span>
+<span id="cb6-142"><a href="#cb6-142" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-143"><a href="#cb6-143" tabindex="-1"></a><span class="co">#&gt; $q20a_cpd_opps_nhs_intranet_ind</span></span>
+<span id="cb6-144"><a href="#cb6-144" tabindex="-1"></a><span class="co">#&gt; [1] &quot;No&quot;  &quot;Yes&quot;</span></span>
+<span id="cb6-145"><a href="#cb6-145" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-146"><a href="#cb6-146" tabindex="-1"></a><span class="co">#&gt; $q20b_cpd_opps_org_website_ind</span></span>
+<span id="cb6-147"><a href="#cb6-147" tabindex="-1"></a><span class="co">#&gt; [1] &quot;No&quot;  &quot;Yes&quot;</span></span>
+<span id="cb6-148"><a href="#cb6-148" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-149"><a href="#cb6-149" tabindex="-1"></a><span class="co">#&gt; $q20c_cpd_opps_blogs_ind</span></span>
+<span id="cb6-150"><a href="#cb6-150" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Yes&quot; &quot;No&quot; </span></span>
+<span id="cb6-151"><a href="#cb6-151" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-152"><a href="#cb6-152" tabindex="-1"></a><span class="co">#&gt; $q20d_cpd_opps_twitter_ind</span></span>
+<span id="cb6-153"><a href="#cb6-153" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Yes&quot; &quot;No&quot; </span></span>
+<span id="cb6-154"><a href="#cb6-154" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-155"><a href="#cb6-155" tabindex="-1"></a><span class="co">#&gt; $q20e_cpd_opps_linkedin_ind</span></span>
+<span id="cb6-156"><a href="#cb6-156" tabindex="-1"></a><span class="co">#&gt; [1] &quot;No&quot;  &quot;Yes&quot;</span></span>
+<span id="cb6-157"><a href="#cb6-157" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-158"><a href="#cb6-158" tabindex="-1"></a><span class="co">#&gt; $q20f_cpd_opps_word_of_mouth_ind</span></span>
+<span id="cb6-159"><a href="#cb6-159" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Yes&quot; &quot;No&quot; </span></span>
+<span id="cb6-160"><a href="#cb6-160" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-161"><a href="#cb6-161" tabindex="-1"></a><span class="co">#&gt; $q20g_cpd_opps_apha_website_ind</span></span>
+<span id="cb6-162"><a href="#cb6-162" tabindex="-1"></a><span class="co">#&gt; [1] &quot;No&quot;  &quot;Yes&quot;</span></span>
+<span id="cb6-163"><a href="#cb6-163" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-164"><a href="#cb6-164" tabindex="-1"></a><span class="co">#&gt; $q22a_org_nhs_type_cat</span></span>
+<span id="cb6-165"><a href="#cb6-165" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;CSU&quot;                                                    </span></span>
+<span id="cb6-166"><a href="#cb6-166" tabindex="-1"></a><span class="co">#&gt;  [2] &quot;Trust (hospitals, mental health, ambulance, etc..)&quot;     </span></span>
+<span id="cb6-167"><a href="#cb6-167" tabindex="-1"></a><span class="co">#&gt;  [3] &quot;ICS&quot;                                                    </span></span>
+<span id="cb6-168"><a href="#cb6-168" tabindex="-1"></a><span class="co">#&gt;  [4] &quot;Social Enterprise&quot;                                      </span></span>
+<span id="cb6-169"><a href="#cb6-169" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;RPB&quot;                                                    </span></span>
+<span id="cb6-170"><a href="#cb6-170" tabindex="-1"></a><span class="co">#&gt;  [6] &quot;Welsh health board&quot;                                     </span></span>
+<span id="cb6-171"><a href="#cb6-171" tabindex="-1"></a><span class="co">#&gt;  [7] &quot;Local Authority &quot;                                       </span></span>
+<span id="cb6-172"><a href="#cb6-172" tabindex="-1"></a><span class="co">#&gt;  [8] &quot;Do not work for NHS&quot;                                    </span></span>
+<span id="cb6-173"><a href="#cb6-173" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;CCG/ICB/ICP&quot;                                            </span></span>
+<span id="cb6-174"><a href="#cb6-174" tabindex="-1"></a><span class="co">#&gt; [10] &quot;regulator &quot;                                             </span></span>
+<span id="cb6-175"><a href="#cb6-175" tabindex="-1"></a><span class="co">#&gt; [11] &quot;Nhse&quot;                                                   </span></span>
+<span id="cb6-176"><a href="#cb6-176" tabindex="-1"></a><span class="co">#&gt; [12] &quot;hsn&quot;                                                    </span></span>
+<span id="cb6-177"><a href="#cb6-177" tabindex="-1"></a><span class="co">#&gt; [13] &quot;NHS England &quot;                                           </span></span>
+<span id="cb6-178"><a href="#cb6-178" tabindex="-1"></a><span class="co">#&gt; [14] &quot;NHS England&quot;                                            </span></span>
+<span id="cb6-179"><a href="#cb6-179" tabindex="-1"></a><span class="co">#&gt; [15] &quot;Community care, social care, primary care networks&quot;     </span></span>
+<span id="cb6-180"><a href="#cb6-180" tabindex="-1"></a><span class="co">#&gt; [16] &quot;NHSE&quot;                                                   </span></span>
+<span id="cb6-181"><a href="#cb6-181" tabindex="-1"></a><span class="co">#&gt; [17] &quot;Local authority public health &quot;                         </span></span>
+<span id="cb6-182"><a href="#cb6-182" tabindex="-1"></a><span class="co">#&gt; [18] &quot;Local Authority&quot;                                        </span></span>
+<span id="cb6-183"><a href="#cb6-183" tabindex="-1"></a><span class="co">#&gt; [19] &quot;local authority&quot;                                        </span></span>
+<span id="cb6-184"><a href="#cb6-184" tabindex="-1"></a><span class="co">#&gt; [20] &quot;HAS/OHID&quot;                                               </span></span>
+<span id="cb6-185"><a href="#cb6-185" tabindex="-1"></a><span class="co">#&gt; [21] &quot;HSN&quot;                                                    </span></span>
+<span id="cb6-186"><a href="#cb6-186" tabindex="-1"></a><span class="co">#&gt; [22] &quot;PCN&quot;                                                    </span></span>
+<span id="cb6-187"><a href="#cb6-187" tabindex="-1"></a><span class="co">#&gt; [23] &quot;Independent provider of acute care (outpatients + IAPT)&quot;</span></span>
+<span id="cb6-188"><a href="#cb6-188" tabindex="-1"></a><span class="co">#&gt; [24] &quot;I don&#39;t; local authority&quot;                               </span></span>
+<span id="cb6-189"><a href="#cb6-189" tabindex="-1"></a><span class="co">#&gt; [25] &quot;Public Heath at County Council&quot;                         </span></span>
+<span id="cb6-190"><a href="#cb6-190" tabindex="-1"></a><span class="co">#&gt; [26] &quot;NHSE&amp;I&quot;                                                 </span></span>
+<span id="cb6-191"><a href="#cb6-191" tabindex="-1"></a><span class="co">#&gt; [27] &quot;GP Federation&quot;                                          </span></span>
+<span id="cb6-192"><a href="#cb6-192" tabindex="-1"></a><span class="co">#&gt; [28] &quot;WORK IN LOCAL GOVERNMENT PUBLIC HEALTH&quot;                 </span></span>
+<span id="cb6-193"><a href="#cb6-193" tabindex="-1"></a><span class="co">#&gt; [29] &quot;Other (please specify):&quot;                                </span></span>
+<span id="cb6-194"><a href="#cb6-194" tabindex="-1"></a><span class="co">#&gt; [30] &quot;Trust, moving to CSU&quot;                                   </span></span>
+<span id="cb6-195"><a href="#cb6-195" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-196"><a href="#cb6-196" tabindex="-1"></a><span class="co">#&gt; $q23a_org_analyst_team_size_cat</span></span>
+<span id="cb6-197"><a href="#cb6-197" tabindex="-1"></a><span class="co">#&gt; [1] &quot;3 ~ 5 (FTEs)&quot;                          </span></span>
+<span id="cb6-198"><a href="#cb6-198" tabindex="-1"></a><span class="co">#&gt; [2] &quot;Below 3 (Full Time Equivalents (FTEs))&quot;</span></span>
+<span id="cb6-199"><a href="#cb6-199" tabindex="-1"></a><span class="co">#&gt; [3] &quot;11 or above (FTEs)&quot;                    </span></span>
+<span id="cb6-200"><a href="#cb6-200" tabindex="-1"></a><span class="co">#&gt; [4] &quot;6 ~ 10 (FTEs)&quot;                         </span></span>
+<span id="cb6-201"><a href="#cb6-201" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-202"><a href="#cb6-202" tabindex="-1"></a><span class="co">#&gt; $q24a_org_analytics_influence_cat</span></span>
+<span id="cb6-203"><a href="#cb6-203" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Yes – somewhat&quot;                           </span></span>
+<span id="cb6-204"><a href="#cb6-204" tabindex="-1"></a><span class="co">#&gt; [2] &quot;Yes – very often&quot;                         </span></span>
+<span id="cb6-205"><a href="#cb6-205" tabindex="-1"></a><span class="co">#&gt; [3] &quot;Not at all&quot;                               </span></span>
+<span id="cb6-206"><a href="#cb6-206" tabindex="-1"></a><span class="co">#&gt; [4] &quot;Yes –  a little&quot;                          </span></span>
+<span id="cb6-207"><a href="#cb6-207" tabindex="-1"></a><span class="co">#&gt; [5] &quot;Yes – analytics influences most decisions&quot;</span></span></code></pre></div>
+</div>
+<div id="cleaning-the-data" class="section level2">
+<h2>Cleaning the data</h2>
+<p>This is good data to see how organisations can be listed in multiple
+ways if the collection is freetext.</p>
+<p>For example:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>apha_cpd_survey <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(q22a_org_nhs_type_cat) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">distinct</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(q22a_org_nhs_type_cat <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Nhse&quot;</span>, <span class="st">&quot;NHS England&quot;</span>, <span class="st">&quot;NHS England &quot;</span>, <span class="st">&quot;NHSE&quot;</span>))</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 1</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt;   q22a_org_nhs_type_cat</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                </span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt; 1 &quot;Nhse&quot;               </span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt; 2 &quot;NHS England &quot;       </span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt; 3 &quot;NHS England&quot;        </span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt; 4 &quot;NHSE&quot;</span></span></code></pre></div>
+<p>all refer to NHS England and whilst some are spelled correctly there
+may be trailing white space.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

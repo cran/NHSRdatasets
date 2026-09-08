@@ -13,32 +13,47 @@
 <meta name="author" content="Tom Jemmett, The Strategy Unit" />
 
 
-<title>ae_attendances dataset</title>
+<title>Dataset: Accident and Emergency attendances</title>
 
-<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
 
 
 <style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -50,55 +65,54 @@ pre > code.sourceCode { white-space: pre-wrap; }
 pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
-  { counter-reset: source-line 0; }
+{ counter-reset: source-line 0; }
 pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
+{ position: relative; left: -4em; counter-increment: source-line; }
 pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
 div.sourceCode
-  {   }
+{ }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -107,13 +121,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -125,7 +146,187 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 
 
@@ -137,57 +338,87 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<h1 class="title toc-ignore">ae_attendances dataset</h1>
-<h4 class="author"><a href="mailto:thomas.jemmett@nhs.net">Tom Jemmett</a>, <a href="https://www.strategyunitwm.nhs.uk/">The Strategy Unit</a></h4>
-<h4 class="date">15/08/2019</h4>
+<h1 class="title toc-ignore">Dataset: Accident and Emergency
+attendances</h1>
+<h4 class="author"><a href="mailto:thomas.jemmett@nhs.net">Tom
+Jemmett</a>, <a href="https://www.strategyunitwm.nhs.uk/">The Strategy
+Unit</a></h4>
 
 
 
-<p>This vignette explains how to use the <code>ae_attendances</code> dataset in R, and also details where it comes from and how it is generated.</p>
-<p>The data is sourced from <a href="https://www.england.nhs.uk/statistics/statistical-work-areas/ae-waiting-times-and-activity/">NHS England Statistical Work Areas</a> and is available under the <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>.</p>
-<p>The data contains all reported A&amp;E attendances for the period April 2016 through March 2019</p>
+<p><em>Edited by Zoë Turner 28 August 2026</em></p>
+<p>This vignette explains how to use the <code>ae_attendances</code>
+dataset in R, and also details where it comes from and how it is
+generated.</p>
+<p>The data is sourced from <a href="https://www.england.nhs.uk/statistics/statistical-work-areas/ae-waiting-times-and-activity/">NHS
+England Statistical Work Areas</a> and is available under the <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open
+Government Licence v3.0</a>.</p>
+<p>The data contains all reported A&amp;E attendances for the period
+April 2016 through March 2019</p>
 <p>The dataset contains:</p>
 <ul>
-<li><strong>period</strong>: the month that this activity relates to, stored as a date (1st of each month)</li>
-<li><strong>org_code</strong>: the <a href="https://digital.nhs.uk/services/organisation-data-service">ODS</a> code for the organisation that this activity relates to</li>
-<li><strong>type</strong>: the <a href="https://web.archive.org/web/20200128111444/https://www.datadictionary.nhs.uk/data_dictionary/attributes/a/acc/accident_and_emergency_department_type_de.asp">Department Type</a> for this activity, either 1, 2, or other</li>
-<li><strong>attendances</strong>: the number of attendances for this department type at this organisation for this month</li>
-<li><strong>breaches</strong>: the number of attendances that breached the 4 hour target</li>
-<li><strong>admissions</strong>: the number of attendances that resulted in an admission to the hospital</li>
+<li><strong>period:</strong> date the month that this activity relates
+to, stored as a date (1st of each month) in the universal format of
+yyyy-mm-dd</li>
+<li><strong>org_code:</strong> factor of <a href="https://digital.nhs.uk/services/organisation-data-service">ODS</a>
+code for the organisation that this activity relates to</li>
+<li><strong>type:</strong> factor the <a href="https://web.archive.org/web/20200128111444/https://www.datadictionary.nhs.uk/data_dictionary/attributes/a/acc/accident_and_emergency_department_type_de.asp">Department
+Type</a> for this activity, either 1, 2, or other</li>
+<li><strong>attendances:</strong> number of the number of attendances
+for this department type at this organisation for this month</li>
+<li><strong>breaches:</strong> number of the number of attendances that
+breached the 4 hour target</li>
+<li><strong>admissions:</strong> number of the number of attendances
+that resulted in an admission to the hospital</li>
 </ul>
-<p>First let’s load some packages and the dataset and show the first 10 rows of data.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;lubridate&#39;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:base&#39;:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     date, intersect, setdiff, union</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;tidyr&#39;</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:Matrix&#39;:</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     expand, pack, unpack</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHSRdatasets)</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;ae_attendances&quot;</span>)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># format for display</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>ae_attendances <span class="sc">%&gt;%</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set the period column to show in Month-Year format</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(period), format, <span class="st">&quot;%b-%y&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set the numeric columns to have a comma at the 1000&#39;s place</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(attendances, breaches, admissions), comma) <span class="sc">%&gt;%</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># show the first 10 rows</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># format as a table</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div>
+<div id="first-load-the-data-and-inspect-it" class="section level2">
+<h2>First, load the data and inspect it</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; Warning: package &#39;scales&#39; was built under R version 4.5.3</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt; Warning: package &#39;ggrepel&#39; was built under R version 4.5.3</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt; Warning: package &#39;lubridate&#39; was built under R version 4.5.3</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;lubridate&#39;</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:base&#39;:</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt;     date, intersect, setdiff, union</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt; Warning: package &#39;forcats&#39; was built under R version 4.5.3</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co">#&gt; Warning: package &#39;tidyr&#39; was built under R version 4.5.3</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;tidyr&#39;</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co">#&gt; The following objects are masked from &#39;package:Matrix&#39;:</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="co">#&gt;     expand, pack, unpack</span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a><span class="co">#&gt; Warning: package &#39;kableExtra&#39; was built under R version 4.5.3</span></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;kableExtra&#39;</span></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:dplyr&#39;:</span></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a><span class="co">#&gt;     group_rows</span></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a><span class="fu">library</span>(NHSRdatasets)</span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a>ae_attendances <span class="ot">&lt;-</span> NHSRdatasets<span class="sc">::</span>ae_attendances</span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a>ae_attendances <span class="sc">|&gt;</span></span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a>    <span class="co"># set the period column to show in Month-Year as a character format</span></span>
+<span id="cb1-36"><a href="#cb1-36" tabindex="-1"></a>    <span class="at">period =</span> <span class="fu">format</span>(period, <span class="st">&quot;%b-%y&quot;</span>),</span>
+<span id="cb1-37"><a href="#cb1-37" tabindex="-1"></a>    <span class="co"># set the numeric columns to have a comma at the 1000&#39;s place</span></span>
+<span id="cb1-38"><a href="#cb1-38" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">across</span>(</span>
+<span id="cb1-39"><a href="#cb1-39" tabindex="-1"></a>      <span class="fu">c</span>(attendances, breaches, admissions),</span>
+<span id="cb1-40"><a href="#cb1-40" tabindex="-1"></a>      scales<span class="sc">::</span>comma</span>
+<span id="cb1-41"><a href="#cb1-41" tabindex="-1"></a>    )</span>
+<span id="cb1-42"><a href="#cb1-42" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-43"><a href="#cb1-43" tabindex="-1"></a>  <span class="co"># show the first 10 rows</span></span>
+<span id="cb1-44"><a href="#cb1-44" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-45"><a href="#cb1-45" tabindex="-1"></a>  <span class="co"># format for display</span></span>
+<span id="cb1-46"><a href="#cb1-46" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -204,100 +435,108 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="left">Mar-17</td>
 <td align="left">RF4</td>
 <td align="left">1</td>
-<td align="left">21,289.0</td>
-<td align="left">2,879.0</td>
-<td align="left">5,060.0</td>
+<td align="left">21,289</td>
+<td align="left">2,879</td>
+<td align="left">5,060</td>
 </tr>
 <tr class="even">
 <td align="left">Mar-17</td>
 <td align="left">RF4</td>
 <td align="left">2</td>
-<td align="left">813.0</td>
-<td align="left">22.0</td>
-<td align="left">0.0</td>
+<td align="left">813</td>
+<td align="left">22</td>
+<td align="left">0</td>
 </tr>
 <tr class="odd">
 <td align="left">Mar-17</td>
 <td align="left">RF4</td>
 <td align="left">other</td>
-<td align="left">2,850.0</td>
-<td align="left">6.0</td>
-<td align="left">0.0</td>
+<td align="left">2,850</td>
+<td align="left">6</td>
+<td align="left">0</td>
 </tr>
 <tr class="even">
 <td align="left">Mar-17</td>
 <td align="left">R1H</td>
 <td align="left">1</td>
-<td align="left">30,210.0</td>
-<td align="left">5,902.0</td>
-<td align="left">6,943.0</td>
+<td align="left">30,210</td>
+<td align="left">5,902</td>
+<td align="left">6,943</td>
 </tr>
 <tr class="odd">
 <td align="left">Mar-17</td>
 <td align="left">R1H</td>
 <td align="left">2</td>
-<td align="left">807.0</td>
-<td align="left">11.0</td>
-<td align="left">0.0</td>
+<td align="left">807</td>
+<td align="left">11</td>
+<td align="left">0</td>
 </tr>
 <tr class="even">
 <td align="left">Mar-17</td>
 <td align="left">R1H</td>
 <td align="left">other</td>
-<td align="left">11,352.0</td>
-<td align="left">136.0</td>
-<td align="left">0.0</td>
+<td align="left">11,352</td>
+<td align="left">136</td>
+<td align="left">0</td>
 </tr>
 <tr class="odd">
 <td align="left">Mar-17</td>
 <td align="left">AD913</td>
 <td align="left">other</td>
-<td align="left">4,381.0</td>
-<td align="left">2.0</td>
-<td align="left">0.0</td>
+<td align="left">4,381</td>
+<td align="left">2</td>
+<td align="left">0</td>
 </tr>
 <tr class="even">
 <td align="left">Mar-17</td>
 <td align="left">RYX</td>
 <td align="left">other</td>
-<td align="left">19,562.0</td>
-<td align="left">258.0</td>
-<td align="left">0.0</td>
+<td align="left">19,562</td>
+<td align="left">258</td>
+<td align="left">0</td>
 </tr>
 <tr class="odd">
 <td align="left">Mar-17</td>
 <td align="left">RQM</td>
 <td align="left">1</td>
-<td align="left">17,414.0</td>
-<td align="left">2,030.0</td>
-<td align="left">3,597.0</td>
+<td align="left">17,414</td>
+<td align="left">2,030</td>
+<td align="left">3,597</td>
 </tr>
 <tr class="even">
 <td align="left">Mar-17</td>
 <td align="left">RQM</td>
 <td align="left">other</td>
-<td align="left">7,817.0</td>
-<td align="left">86.0</td>
-<td align="left">0.0</td>
+<td align="left">7,817</td>
+<td align="left">86</td>
+<td align="left">0</td>
 </tr>
 </tbody>
 </table>
-<p>We can calculate the 4 hours performance for England as a whole like so:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>england_performance <span class="ot">&lt;-</span> ae_attendances <span class="sc">%&gt;%</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(period) <span class="sc">%&gt;%</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_at</span>(<span class="fu">vars</span>(attendances, breaches), sum) <span class="sc">%&gt;%</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">performance =</span> <span class="dv">1</span> <span class="sc">-</span> breaches <span class="sc">/</span> attendances)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># format for display</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>england_performance <span class="sc">%&gt;%</span> </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># same format options as above</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(period), format, <span class="st">&quot;%b-%y&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(attendances, breaches), comma) <span class="sc">%&gt;%</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># this time show the performance column as a percentage</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(performance), percent) <span class="sc">%&gt;%</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># show the first 10 rows and format as a table</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div>
+<p>We can calculate the 4 hours performance for England as a whole like
+so:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>england_performance <span class="ot">&lt;-</span> ae_attendances <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(period) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">across</span>(<span class="fu">c</span>(attendances, breaches), sum),</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>    <span class="at">performance =</span> <span class="dv">1</span> <span class="sc">-</span> breaches <span class="sc">/</span> attendances</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>  )</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co"># format for display</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>england_performance <span class="sc">|&gt;</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>    <span class="co"># same format options as above</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>    <span class="at">period =</span> <span class="fu">format</span>(period, <span class="st">&quot;%b-%y&quot;</span>),</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">across</span>(<span class="fu">c</span>(attendances, breaches), scales<span class="sc">::</span>comma),</span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>    <span class="co"># this time show the performance column as a percentage</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>    <span class="at">performance =</span> scales<span class="sc">::</span><span class="fu">percent</span>(performance)</span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>  <span class="co"># show the first 10 rows and format as a table</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -371,51 +610,73 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>We can now plot the monthly performance</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(england_performance, <span class="fu">aes</span>(period, performance)) <span class="sc">+</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> percent) <span class="sc">+</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Month of attendance&quot;</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;% of attendances that met the 4 hour standard&quot;</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;NHS England A&amp;E 4 Hour Performance&quot;</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Source: NHS England Statistical Work Areas (OGL v3.0)&quot;</span>)</span></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
-<p>We can clearly see the “Winter Pressures” where performance drops.</p>
-<p>We can also inspect performance for the <a href="https://web.archive.org/web/20200128111444/https://www.datadictionary.nhs.uk/data_dictionary/attributes/a/acc/accident_and_emergency_department_type_de.asp">different types of department</a>:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ae_attendances <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(period, type) <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_if</span>(is.numeric, sum) <span class="sc">%&gt;%</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">performance =</span> <span class="dv">1</span> <span class="sc">-</span> breaches <span class="sc">/</span> attendances) <span class="sc">%&gt;%</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(period, performance, <span class="at">colour =</span> type)) <span class="sc">+</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> percent) <span class="sc">+</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">#facet_wrap(vars(type), nrow = 1) +</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Month of attendance&quot;</span>,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;% of attendances that met the 4 hour standard&quot;</span>,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;NHS England A&amp;E 4 Hour Performance&quot;</span>,</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;By Department Type&quot;</span>,</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Source: NHS England Statistical Work Areas (OGL v3.0)&quot;</span>)</span></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
-<p>From this it appears as if only the type 1 departments have the seasonal drops, type 2 and “other” departments remain pretty consistent.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(england_performance, ggplot2<span class="sc">::</span><span class="fu">aes</span>(period, performance)) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Month of attendance&quot;</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;% of attendances that met the 4 hour standard&quot;</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;NHS England A&amp;E 4 Hour Performance&quot;</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;Source: NHS England Statistical Work Areas (OGL v3.0)&quot;</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+<p>We can clearly see the “Winter Pressures” where performance
+drops.</p>
+<p>We can also inspect performance for the <a href="https://web.archive.org/web/20200128111444/https://www.datadictionary.nhs.uk/data_dictionary/attributes/a/acc/accident_and_emergency_department_type_de.asp">different
+types of department</a>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>ae_attendances <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(period, type) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise_if</span>(is.numeric, sum) <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">performance =</span> <span class="dv">1</span> <span class="sc">-</span> breaches <span class="sc">/</span> attendances) <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(ggplot2<span class="sc">::</span><span class="fu">aes</span>(period, performance, <span class="at">colour =</span> type)) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>  <span class="co"># facet_wrap(vars(type), nrow = 1) +</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Month of attendance&quot;</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;% of attendances that met the 4 hour standard&quot;</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;NHS England A&amp;E 4 Hour Performance&quot;</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;By Department Type&quot;</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;Source: NHS England Statistical Work Areas (OGL v3.0)&quot;</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+<p>From this it appears as if only the type 1 departments have the
+seasonal drops, type 2 and “other” departments remain pretty
+consistent.</p>
+</div>
 <div id="what-are-the-best-and-worst-trusts-for-performance" class="section level2">
 <h2>What are the best and worst trusts for performance?</h2>
-<p>We could create a similar table of data for performance by each individual trust, but it would be useful to only look at trusts that have a type 1 department as it appears from the chart above that these departments have the largest variation.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>performance_by_trust <span class="ot">&lt;-</span> ae_attendances <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(org_code, period) <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># make sure that this trust has a type 1 department</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">any</span>(type <span class="sc">==</span> <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_at</span>(<span class="fu">vars</span>(attendances, breaches), sum) <span class="sc">%&gt;%</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">performance =</span> <span class="dv">1</span> <span class="sc">-</span> breaches <span class="sc">/</span> attendances)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># format for display</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>performance_by_trust <span class="sc">%&gt;%</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(period), format, <span class="st">&quot;%b-%y&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(attendances, breaches), comma) <span class="sc">%&gt;%</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(performance), percent) <span class="sc">%&gt;%</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div>
+<p>We could create a similar table of data for performance by each
+individual trust, but it would be useful to only look at trusts that
+have a type 1 department as it appears from the chart above that these
+departments have the largest variation.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>performance_by_trust <span class="ot">&lt;-</span> ae_attendances <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(org_code, period) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="co"># make sure that this trust has a type 1 department</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="fu">any</span>(type <span class="sc">==</span> <span class="dv">1</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">across</span>(</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>      <span class="fu">c</span>(attendances, breaches),</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>      <span class="sc">~</span> <span class="fu">sum</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>    ),</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>    <span class="at">performance =</span> <span class="dv">1</span> <span class="sc">-</span> breaches <span class="sc">/</span> attendances</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>  )</span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co"># format for display</span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a>performance_by_trust <span class="sc">|&gt;</span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a>    <span class="at">period =</span> <span class="fu">format</span>(period, <span class="st">&quot;%b-%y&quot;</span>),</span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">across</span>(<span class="fu">c</span>(attendances, breaches), scales<span class="sc">::</span>comma),</span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a>    <span class="at">performance =</span> scales<span class="sc">::</span><span class="fu">percent</span>(performance)</span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -430,144 +691,168 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="odd">
 <td align="left">R0A</td>
 <td align="left">Oct-17</td>
-<td align="left">35,744.0</td>
-<td align="left">3,663.0</td>
-<td align="left">89.7521%</td>
+<td align="left">35,744</td>
+<td align="left">3,663</td>
+<td align="left">89.7521262%</td>
 </tr>
 <tr class="even">
 <td align="left">R0A</td>
 <td align="left">Nov-17</td>
-<td align="left">34,314.0</td>
-<td align="left">3,982.0</td>
-<td align="left">88.3954%</td>
+<td align="left">34,314</td>
+<td align="left">3,982</td>
+<td align="left">88.3954071%</td>
 </tr>
 <tr class="odd">
 <td align="left">R0A</td>
 <td align="left">Dec-17</td>
-<td align="left">34,082.0</td>
-<td align="left">5,430.0</td>
-<td align="left">84.0678%</td>
+<td align="left">34,082</td>
+<td align="left">5,430</td>
+<td align="left">84.0678364%</td>
 </tr>
 <tr class="even">
 <td align="left">R0A</td>
 <td align="left">Jan-18</td>
-<td align="left">33,758.0</td>
-<td align="left">4,906.0</td>
-<td align="left">85.4671%</td>
+<td align="left">33,758</td>
+<td align="left">4,906</td>
+<td align="left">85.4671485%</td>
 </tr>
 <tr class="odd">
 <td align="left">R0A</td>
 <td align="left">Feb-18</td>
-<td align="left">30,520.0</td>
-<td align="left">4,111.0</td>
-<td align="left">86.5301%</td>
+<td align="left">30,520</td>
+<td align="left">4,111</td>
+<td align="left">86.5301442%</td>
 </tr>
 <tr class="even">
 <td align="left">R0A</td>
 <td align="left">Mar-18</td>
-<td align="left">35,233.0</td>
-<td align="left">5,496.0</td>
-<td align="left">84.4010%</td>
+<td align="left">35,233</td>
+<td align="left">5,496</td>
+<td align="left">84.4009877%</td>
 </tr>
 <tr class="odd">
 <td align="left">R0A</td>
 <td align="left">Apr-18</td>
-<td align="left">33,127.0</td>
-<td align="left">3,809.0</td>
-<td align="left">88.5018%</td>
+<td align="left">33,127</td>
+<td align="left">3,809</td>
+<td align="left">88.5018263%</td>
 </tr>
 <tr class="even">
 <td align="left">R0A</td>
 <td align="left">May-18</td>
-<td align="left">35,797.0</td>
-<td align="left">4,792.0</td>
-<td align="left">86.6134%</td>
+<td align="left">35,797</td>
+<td align="left">4,792</td>
+<td align="left">86.6134034%</td>
 </tr>
 <tr class="odd">
 <td align="left">R0A</td>
 <td align="left">Jun-18</td>
-<td align="left">34,070.0</td>
-<td align="left">3,616.0</td>
-<td align="left">89.3866%</td>
+<td align="left">34,070</td>
+<td align="left">3,616</td>
+<td align="left">89.3865571%</td>
 </tr>
 <tr class="even">
 <td align="left">R0A</td>
 <td align="left">Jul-18</td>
-<td align="left">35,081.0</td>
-<td align="left">4,723.0</td>
-<td align="left">86.5369%</td>
+<td align="left">35,081</td>
+<td align="left">4,723</td>
+<td align="left">86.5368718%</td>
 </tr>
 </tbody>
 </table>
-<p>From this table we can calculate the overall performance by each trust and then organise the trusts by their overall performance.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>performance_by_trust_ranking <span class="ot">&lt;-</span> performance_by_trust <span class="sc">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">performance =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(breaches) <span class="sc">/</span> <span class="fu">sum</span>(attendances)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(performance) <span class="sc">%&gt;%</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(org_code) <span class="sc">%&gt;%</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.character</span>()</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Bottom 5&quot;</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Bottom 5&quot;</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(performance_by_trust_ranking, <span class="dv">5</span>)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;RQW&quot; &quot;RWD&quot; &quot;RXW&quot; &quot;RX1&quot; &quot;RHU&quot;</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Top 5&quot;</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Top 5&quot;</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(performance_by_trust_ranking, <span class="dv">5</span>)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;RA4&quot; &quot;RBD&quot; &quot;RVW&quot; &quot;RCU&quot; &quot;RC9&quot;</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>performance_by_trust <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(org_code), fct_relevel, performance_by_trust_ranking) <span class="sc">%&gt;%</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(org_code <span class="sc">%in%</span> <span class="fu">c</span>(<span class="fu">head</span>(performance_by_trust_ranking, <span class="dv">5</span>),</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">tail</span>(performance_by_trust_ranking, <span class="dv">5</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(period, performance)) <span class="sc">+</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> percent) <span class="sc">+</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(org_code), <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Month of attendance&quot;</span>,</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;% of attendances that met the 4 hour standard&quot;</span>,</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;NHS England A&amp;E 4 Hour Performance&quot;</span>,</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Bottom 5/Top 5 over the whole 3 years&quot;</span>,</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">&quot;Source: NHS England Statistical Work Areas (OGL v3.0)&quot;</span>)</span></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>From this table we can calculate the overall performance by each
+trust and then organise the trusts by their overall performance.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>performance_by_trust_ranking <span class="ot">&lt;-</span> performance_by_trust <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">performance =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(breaches) <span class="sc">/</span> <span class="fu">sum</span>(attendances), <span class="at">.by =</span> org_code) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(performance) <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(org_code) <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  <span class="fu">as.character</span>()</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Bottom 5&quot;</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Bottom 5&quot;</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="fu">head</span>(performance_by_trust_ranking, <span class="dv">5</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt; [1] &quot;RQW&quot; &quot;RWD&quot; &quot;RXW&quot; &quot;RX1&quot; &quot;RHU&quot;</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Top 5&quot;</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Top 5&quot;</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="fu">tail</span>(performance_by_trust_ranking, <span class="dv">5</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; [1] &quot;RA4&quot; &quot;RBD&quot; &quot;RVW&quot; &quot;RCU&quot; &quot;RC9&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>performance_by_trust <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>    <span class="at">org_code =</span> forcats<span class="sc">::</span><span class="fu">fct_relevel</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>      org_code,</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>      performance_by_trust_ranking</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>    )</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(org_code <span class="sc">%in%</span> <span class="fu">c</span>(</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>    <span class="fu">head</span>(performance_by_trust_ranking, <span class="dv">5</span>),</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>    <span class="fu">tail</span>(performance_by_trust_ranking, <span class="dv">5</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>  )) <span class="sc">|&gt;</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(ggplot2<span class="sc">::</span><span class="fu">aes</span>(period, performance)) <span class="sc">+</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">facet_wrap</span>(ggplot2<span class="sc">::</span><span class="fu">vars</span>(org_code), <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">labs</span>(</span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Month of attendance&quot;</span>,</span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;% of attendances that met the 4 hour standard&quot;</span>,</span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;NHS England A&amp;E 4 Hour Performance&quot;</span>,</span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Bottom 5/Top 5 over the whole 3 years&quot;</span>,</span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;Source: NHS England Statistical Work Areas (OGL v3.0)&quot;</span></span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
 </div>
 <div id="benchmarking" class="section level2">
 <h2>Benchmarking</h2>
-<p>It is sometimes useful to see how an organisation stacks up against all of the other organisations. Below we create a chart where each organisation is shown as a point, ordered by performance from left (highest performance) to right (lowest) performance.</p>
-<p>It’s useful to indicate certain organisations on the chart, below I am showing the 3 organisations that are at the lower quartile, median and upper quartile, however you could change this to instead pick out specific organisations (using a reference table and <code>left_join</code> or hard coding with <code>case_when</code>).</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ae_attendances <span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(period <span class="sc">==</span> <span class="fu">last</span>(period)) <span class="sc">%&gt;%</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(org_code) <span class="sc">%&gt;%</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">any</span>(type <span class="sc">==</span> <span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_at</span>(<span class="fu">vars</span>(attendances, breaches), sum) <span class="sc">%&gt;%</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">performance =</span> <span class="dv">1</span> <span class="sc">-</span> breaches<span class="sc">/</span>attendances,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">overall_performance =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(breaches)<span class="sc">/</span><span class="fu">sum</span>(attendances),</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">org_code =</span> <span class="fu">fct_reorder</span>(org_code, <span class="sc">-</span>performance)) <span class="sc">%&gt;%</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">#</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(performance) <span class="sc">%&gt;%</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># lets highlight the organsiations that are at the lower and upper quartile</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># and at the median. First &quot;tile&quot; the data into 4 groups, then we use the</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># lag function to check to see if the value changes between rows. We will get</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># NA for the first row, so replace this with FALSE</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">highlight =</span> <span class="fu">ntile</span>(<span class="at">n =</span> <span class="dv">4</span>),</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">highlight =</span> <span class="fu">replace_na</span>(highlight <span class="sc">!=</span> <span class="fu">lag</span>(highlight), <span class="cn">FALSE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(org_code, performance)) <span class="sc">+</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> overall_performance)) <span class="sc">+</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">fill =</span> highlight), <span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="at">pch =</span> <span class="dv">21</span>) <span class="sc">+</span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">ifelse</span>(highlight, <span class="fu">as.character</span>(org_code), <span class="cn">NA</span>)),</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;TRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;black&quot;</span>,</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>                               <span class="st">&quot;FALSE&quot;</span> <span class="ot">=</span> <span class="cn">NA</span>)) <span class="sc">+</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> percent) <span class="sc">+</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.line =</span> <span class="fu">element_line</span>(),</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.y =</span> <span class="fu">element_line</span>())</span></code></pre></div>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAAwFBMVEUAAAAAADoAAGYAOpAAZpAAZrY6AAA6ADo6AGY6Ojo6OpA6kNtNTU1NTW5NTY5NbqtNjshmAABmADpmZmZmkJBmtv9uTU1uTW5uTY5ubqtuq8huq+SOTU2OTW6OTY6OyP+QOgCQOjqQkDqQkGaQtpCQ27aQ2/+rbk2rbm6ryKur5P+2ZgC2///Ijk3I/8jI///bkDrb/7bb/9vb///kq27k/8jk////tmb/yI7/25D/5Kv//7b//8j//9v//+T///9cKkLiAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAKj0lEQVR4nO2dC3vaNhSGlWUk6UgvZGM3uiZbO9qFZPFWVkJpqv//r+YjW0byheOLJEvifM+T2mCQxNujo4uPZMZJB8XGLoDvIkCICBAiAoSIACE6COjzzw+cf3l9+fJTceDF2T38+/X9tYtSjqhDgB4vXzwIBOtX8pAqP/v8y6f7BX981S6pcHXgV90//yu1oC9vHsCS8kP6dn6Wolkvvn64bZVUwEKrWGop/Mtvt/kB3izeuF+spQExkP3SjiAU0ONLwSM/pG/Ks9QH/ffm79eXi1ZJBaveFgTX14v1Ij/FkgpWKKAmH5Sd3V/v3dCRAvr6fpG1YouiFZNn6/SELEjvBwmbyntEoq4dtw8aLSmPZBJQlA29WQuKkJBZC4rQiIxaEPCJjZBhH0SADiZFgA4nFaUTMt+KRUaIACEyDii2WmZ4qCHoREXI9FgsAxQRIQuA4uouGh/NZz6IAB1IKq6mzMZ8EPkg60l5JAKEiAAhIkCICBAiAoTICqCY2nkr/aCYENkBxOIhZAkQiwaRNR8Uy/y0pVYswxMDIlvNfDRGZK8fFIkRWewosihmF632pGOoZ3aHGhEQsj0Wk57IXDaOZR0QJ0CHk8pNyFw2juViuiPoqA8n80Eh3492CChMQq4ABeuI3Ey5Bhx85mpOOlg35GzSPtQ65g6Q2cycyd1tH9ULPd1kTmnK+er0Y/pGwibi7W9vvrlLT7ZnE3PlGiaH98WUyaGnmykctmdzvgEiTzffA6fdbLo9gysZNS/kEtC+N5QD4quJgMR3V39eLTnfnCx5kgIT73kit4Bka68AEqeb03/hkKSGs5tN4G1v5PLWs1zMwSSgDZtnVFZTnqRQVvDu5uTd+dJcqYbK6b35YpZaOmmoSakTerqZ8+3F3W4Gr9NrU3OFGizHwQt5HLWwoMwfp/5nmcJJq9YcDpxnbtsbOY/uEEaUVTFRw6BiQfWSBwKU1TRhPCuBIpkI35Mfjh5Q5oOy5j7rD26fCaecHwiQOvmRgCXtZqJb+HST9w4JUFC3gsYIwctXK4SBaKQYxXBu248FKJjbZWNFuQZTy8YLAw5knnrEOGkChH6BAGHf8J/PyEsRAiA0rgUFgGhkQP5vhzI+IM9NyAMf5DehcQEF0BnCy/b5R9g1ucV+0v0A+V7L0KJ9eX3N1y8/WdtP2vdahpYs39vW3n7Sno9a2wKyuJ+0vJ/op9pVsedW95NmPg/sWznpXz/Y3U+6uGvvISO9SAlj86QaepK6Hbv7SRc25B8hrUSr039m86cbLbYCLMT6ftLM32qmlmg3m0P8QOm+1OOlg/2kCwvyDhEOqFdSfb7uJyGtOAlUsd2sZ/TJ4F/m5XJyvTCbIq5gcFK9UvCwORt7sFpOw7vmzDNAqhFV01Oih0Gps4SIRm413kErBcQ1lVr5vkn1196IKoiU6GGQACTD+MxkXlMc9cUqi+buSciUMTJF+hUlOBYkAP3w3UdngLIgyrGaeS2lwoi09+sAzSEu7dgAFfOMJRtSo4e5BAShn66qGES58/H6QeX0KpFWavQwl4B4MnUGaOx+UDnBcrdIjR7mBaDd1dIZIF+SkikyzWMzpkYPF4B4MjlWQCU8XIkehkmZzelHAejp97eOAG3PREHGd9L7NEuARB4QPQwLg9LGLGtXNn2L3KYEynn/PmIlKYPSGE1FJhA9vGJMrA3KgvWdNvMmkjKr5q6jfekW5CkgmcEYd9C0/IY1BvaLPsYwX69izDcnXcnBeSXzu5mvZOHeDRkfQMWiWkD+9YMqeVR/ge0clfN0qJM2ZL0beydFLvC4QlTuB62m0IMfnJQ1MddGVAaUTHyYDzqUC2uaTrOUn/piJejU3JzvnpRFFebjxIYqM3YrdtJzWb/j5tdRVFFY/SAtOzeOKFxAjnZGC6wfpGfoYnmw//NBhzJ00OQHMR/UmOMejzVGIc0H1eapMbKSgyLf54PqMq0fYhrMQH0RmJOW+e4NyAKj0mDVVFLOpTAynLByHpyTLuVvxRMF7qT1AtiI4NN90EVwTrpUBGa8ex3UpH0LWQXkT1IDpNQzM0GTynnoPiiT2r02kZxyHngrVsioCZUi7YfsMesdICP9xtictJA2iB2alpESmU7KhAyt/IgXUMFnWLn0bydglt4EcQ6WiUG+x2HAJjR8UtbPQHJzGmxE0QNSm7R+CSiKr4oNj2+M2knnGjTfGHEzr0jpN3YtZfH5fMnzkFIM+bJl9a9oRwKIaxWt09eKs6RAHFMrpqrXfGOM0x0H1N2EYpow2y+KllEGSWVNNOsaeRWTBSmLokWPTv6P6z1f1i3yKqYJM/WRStmDFuqeZNJxd8uYJszURdH5ozrE69LYqVtzH1NHUV0UDbHM0qdWBpeswyA/LkCZaQCW3dWyuA9aBVRMWuOJVsZidVt0tZMHgJRF0fkTuUCNgNqYkB4nXbNFV3v5AUguioZnuu1XR5c+2WFoVmrmR9yBarhyH5QtYN1dvYMalq+Orn64LaEIAeWP2Fw9g0O+OrpO7eKJSv2gUbfoGirZzItHKhVPLxOro2vF2iyC1S/7tTWFfbVw1TE18z2EGxH+q+zuJz228rFrc9lr5qT1EavYidPiftIjCw39RO9qiP02a/ZyNbaf9MhiSC1D74vlFmRxP+mxNRBQ7nJs7ic9ttr7IOhVVarYT7f88cWD1f2kfVbdfJA2JZQbjN39pD0W+qtyC7K7n7THwn/V4+Xl81vb+0n7qyPvSUs1u2kCBDow70GAQAe6QgQIdOBuIgESar6bSIAyZSOyugsG8zCX1AhinAAdVsOIjABJNZgQAZIiQIgIECbyQb1EgBARIEQECBEBUlTnpgnQXrUNPQHaiwAhIkCYyAf1EAFSVWNCBEhRnRMiQIoIECIChIl8UHcRIEQESFelkhEgTVU3TYA0ESBE1TgYAqSrsg6RAOmq1DECpIsAYSIf1FEECBEBQkSAEBEgRASoIr0dI0BllUYbBKisUtQ9ASqLAGHSx6sEqCryQV1EgBARIEQECBEBQkSA6qS0YwSoRuq8KwGqEQFCRIAwkQ9qLwKEiAAhIkCICBAiAoSIACEiQIgIECIChIgAISJAtdoPxtBftb4EXce6XXK9ut72eYx3u+R6dQQEm21Gu11yrToCAsuJeLvkOnXwQZkBRb1d8kG1+FVApGpBcOXYtktu0D3YCG2X3KiMAG2X3KicAG2X7FNSHokAISJAiAgQIpOAopIFQHGKACEiQIgIECIChIgAISJAiAgQoigA9X10bhsRIEQECJGPgOC58RPOtxd/sG/udjN28u7irnyxOML1tykgeG2Dk4eA4Hnu8Cceag1PXNzN9r8cLsDDKuWH5HXxEPik6anOA+QhIFFh0n+2Z/P8RbIHtD1fah+S1zfZI2Lnjan2lY+AwA5SEIKFMIrtvopJdyM/JK8n2SRF3wd5NysaQBZql5CPgOBpr1DFzpf7qiQvFlUs/1BR1U6WdkrjIaDCSZ8v6520+rebTXInnZqQDUoeAiqaeWEsshkvXaxt5m1YkY+AKtrYcjAt5DsgqDWijzOWfAfEof2GTmPWjNtyxc3yHtDYIkCICBAiAoSIACEiQIgIEKL/AdwF7l+FjakUAAAAAElFTkSuQmCC" /><!-- --></p>
+<p>It is sometimes useful to see how an organisation stacks up against
+all of the other organisations. Below we create a chart where each
+organisation is shown as a point, ordered by performance from left
+(highest performance) to right (lowest) performance.</p>
+<p>It’s useful to indicate certain organisations on the chart, below I
+am showing the 3 organisations that are at the lower quartile, median
+and upper quartile, however you could change this to instead pick out
+specific organisations (using a reference table and
+<code>left_join</code> or hard coding with <code>case_when</code>).</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>ae_attendances <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(period <span class="sc">==</span> <span class="fu">last</span>(period)) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(org_code) <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="fu">any</span>(type <span class="sc">==</span> <span class="dv">1</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise_at</span>(<span class="fu">vars</span>(attendances, breaches), sum) <span class="sc">|&gt;</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>    <span class="at">performance =</span> <span class="dv">1</span> <span class="sc">-</span> breaches <span class="sc">/</span> attendances,</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>    <span class="at">overall_performance =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(breaches) <span class="sc">/</span> <span class="fu">sum</span>(attendances),</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>    <span class="at">org_code =</span> forcats<span class="sc">::</span><span class="fu">fct_reorder</span>(org_code, <span class="sc">-</span>performance)</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>  <span class="co">#</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(performance) <span class="sc">|&gt;</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>  <span class="co"># lets highlight the organsiations that are at the lower and upper quartile</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>  <span class="co"># and at the median. First &quot;tile&quot; the data into 4 groups, then we use the</span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a>  <span class="co"># lag function to check to see if the value changes between rows. We will get</span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>  <span class="co"># NA for the first row, so replace this with FALSE</span></span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a>    <span class="at">highlight =</span> <span class="fu">ntile</span>(<span class="at">n =</span> <span class="dv">4</span>),</span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a>    <span class="at">highlight =</span> tidyr<span class="sc">::</span><span class="fu">replace_na</span>(highlight <span class="sc">!=</span> <span class="fu">lag</span>(highlight), <span class="cn">FALSE</span>)</span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(ggplot2<span class="sc">::</span><span class="fu">aes</span>(org_code, performance)) <span class="sc">+</span></span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_hline</span>(ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">yintercept =</span> overall_performance)) <span class="sc">+</span></span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_point</span>(ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">fill =</span> highlight), <span class="at">show.legend =</span> <span class="cn">FALSE</span>, <span class="at">pch =</span> <span class="dv">21</span>) <span class="sc">+</span></span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>(ggplot2<span class="sc">::</span><span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">ifelse</span>(highlight, <span class="fu">as.character</span>(org_code), <span class="cn">NA</span>)),</span>
+<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a>    <span class="at">na.rm =</span> <span class="cn">TRUE</span></span>
+<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a>    <span class="st">&quot;TRUE&quot;</span> <span class="ot">=</span> <span class="st">&quot;black&quot;</span>,</span>
+<span id="cb8-29"><a href="#cb8-29" tabindex="-1"></a>    <span class="st">&quot;FALSE&quot;</span> <span class="ot">=</span> <span class="cn">NA</span></span>
+<span id="cb8-30"><a href="#cb8-30" tabindex="-1"></a>  )) <span class="sc">+</span></span>
+<span id="cb8-31"><a href="#cb8-31" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb8-32"><a href="#cb8-32" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb8-33"><a href="#cb8-33" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">theme</span>(</span>
+<span id="cb8-34"><a href="#cb8-34" tabindex="-1"></a>    <span class="at">panel.grid =</span> ggplot2<span class="sc">::</span><span class="fu">element_blank</span>(),</span>
+<span id="cb8-35"><a href="#cb8-35" tabindex="-1"></a>    <span class="at">axis.text.x =</span> ggplot2<span class="sc">::</span><span class="fu">element_blank</span>(),</span>
+<span id="cb8-36"><a href="#cb8-36" tabindex="-1"></a>    <span class="at">axis.line =</span> ggplot2<span class="sc">::</span><span class="fu">element_line</span>(),</span>
+<span id="cb8-37"><a href="#cb8-37" tabindex="-1"></a>    <span class="at">axis.ticks.y =</span> ggplot2<span class="sc">::</span><span class="fu">element_line</span>()</span>
+<span id="cb8-38"><a href="#cb8-38" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
 </div>
 
 

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Contributing to the package</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Contributing to the package</h1>
+
+
+
+<p>Aside from the notes on the README about contributing (being in line
+with code of conduct) there are some further things to consider when
+contributing datasets to this package, particularly as CRAN has some
+restrictions and the benefit of this R package is its being available
+through GitHub and CRAN.</p>
+<div id="consider-teachability-using-r" class="section level2">
+<h2>Consider teachability using R</h2>
+<p>This package came from teaching/show-and-tell type work using R using
+healthcare data. Although this is relevant to a general audience it is,
+in a sense, opinionated as the data is held in R objects for use in R
+and would be more familiar with people who are working, or wish to work,
+in healthcare data.</p>
+<p>We have some datasets like an example survey from Association of
+Professional Healthcare Analysts (AphA) which isn’t healthcare specific
+and relates to analysts who work with healthcare. This is real data
+which can be used to practice working with text (freetext and
+categorical) which can be useful cleaning and manipulating practice.</p>
+</div>
+<div id="limitations" class="section level2">
+<h2>Limitations</h2>
+<p>Because this package has found a wider audience through CRAN as it’s
+easy to install and there may be some organisations that restrict R
+packages to only those through CRAN, we will only accept datasets that
+are relatively small in size as they contribute to the package size
+overall.</p>
+<p>CRAN has a limit of 5MB for the entire package, so each dataset
+should be no more than 500KB in size. You can check with
+<code>object.size()</code> in R.</p>
+</div>
+<div id="sensitive-data" class="section level2">
+<h2>Sensitive data</h2>
+<p>As this is a publicly available and used dataset we do not accept any
+sensitive or disclosive information.</p>
+<p>Ideally the data should be from a published source, or
+synthetic/generated data and where synthetically generated we request
+that the information around the generation of the data is also shared in
+the package (in the R folder). This is because synthetic data can still
+have a governance issue where data may be used as if it were real and we
+need to ensure that the origin of the data is available and
+retained.</p>
+<p>As of August 2026, the datasets in this package have not been created
+or modified in any way by AI.</p>
+</div>
+<div id="licences" class="section level2">
+<h2>Licences</h2>
+<p>If data, particularly from publicly available sources, have an
+existing <a href="https://en.wikipedia.org/wiki/Software_license">licence</a> this
+must be referenced and adhered to particularly if those licences have
+restrictions for example <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open
+Governance Licence</a>.</p>
+<p>Attribution must be included to the source data where
+appropriate.</p>
+<p>Where these are not applicable the licence and attribution will be
+the default open licences used and referenced by NHS-R Community and
+this package.</p>
+</div>
+<div id="data-type-and-code-style" class="section level2">
+<h2>Data type and code style</h2>
+<ul>
+<li>Datasets should be saved as a <code>tibble</code> and a data frame
+can be converted to that using <code>as_tibble()</code> from the
+<code>tibble</code> R package.</li>
+<li>Datasets should be named using <a href="https://en.wikipedia.org/wiki/Camel_case">camel case</a>, as
+should all columns within the dataset so no spaces or capital
+letters.</li>
+<li>Datasets should be documented with <a href="https://roxygen2.r-lib.org/">roxygen2</a> with a high level
+overview.</li>
+</ul>
+</div>
+<div id="vignettes" class="section level2">
+<h2>Vignettes</h2>
+<p>Vignettes which describe the data in more detail as well as useful
+examples of how to use the data will be very welcome.</p>
+<p>Vignettes should, where appropriate, use <a href="https://tidyverse.org/">tidyverse</a> functions and coding style,
+avoiding base R and <code>data.table</code> as <code>tidyverse</code> is
+currently the coding style for NHS-R Community. To make it clear where
+functions are from the style in vignettes for functions is
+<code>package::function()</code> with base R functions just appearing as
+<code>function()</code>.</p>
+</div>
+<div id="package-dependencies" class="section level2">
+<h2>Package dependencies</h2>
+<p>This R package has no dependency packages but does have suggested to
+support code examples in the README and vignettes. Currently we have
+static datasets that have already been curated and do not have plans to
+make any of the functions dynamic so we wish to avoid any dependencies
+to ensure stability and longevity of this package in CRAN.</p>
+</div>
+<div id="updating-the-package" class="section level2">
+<h2>Updating the package</h2>
+<p>This package should, ideally, require very little input over time
+from maintainers so although some datasets may change over time (for
+example <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/deaths/datasets/weeklyprovisionalfiguresondeathsregisteredinenglandandwales">mortality</a>
+continues to have data publications) this package will not be updated to
+include this data.</p>
+<p>Some changes may be required to maintain the overall structure of the
+package, including submitted new datasets.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

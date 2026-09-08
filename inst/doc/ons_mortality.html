@@ -10,35 +10,49 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="Zoë Turner" />
 
 
-<title>Building the ONS mortality dataset</title>
+<title>Dataset: ONS Weekly Provisional Registered Deaths in England and Wales</title>
 
-<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
 
 
 <style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -50,55 +64,54 @@ pre > code.sourceCode { white-space: pre-wrap; }
 pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
-  { counter-reset: source-line 0; }
+{ counter-reset: source-line 0; }
 pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
+{ position: relative; left: -4em; counter-increment: source-line; }
 pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
 div.sourceCode
-  {   }
+{ }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -107,13 +120,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -125,7 +145,187 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 
 
@@ -137,463 +337,188 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<h1 class="title toc-ignore">Building the ONS mortality dataset</h1>
-<h4 class="author"><a href="mailto:zoe.turner@nhs.net">Zoë Turner</a></h4>
-<h4 class="date">23/04/2020</h4>
+<h1 class="title toc-ignore">Dataset: ONS Weekly Provisional Registered
+Deaths in England and Wales</h1>
 
 
 
-<p>This vignette details why and how the <code>ons_mortality</code> dataset was created.</p>
-<p>The data were pulled together from the weekly xls spreadsheets provided by the Office of National Statistics (ONS) from 2010 to 2019 for training purposes and is a static data set.</p>
-<p>Data is released every Friday and includes provisionally registered deaths for England and Wales for:</p>
-<ul>
-<li>Total, all deaths</li>
-<li>regions of usual residence</li>
-<li>age bands (persons and for males/females)</li>
-<li>by underlying cause ‘All respiratory diseases’ (the methodology has changed over the years, see the subsection for more information)</li>
-</ul>
-<div id="further-notes-taken-from-the-spreadsheet" class="section level3">
-<h3>Further notes taken from the spreadsheet:</h3>
-<p>1 This average is based on the actual number of death registrations recorded for each corresponding week over the previous five years. Moveable public holidays, when register offices are closed, affect the number of registrations made in the published weeks and in the corresponding weeks in previous years.</p>
-<p>2 Counts of deaths by underlying cause exclude deaths at age under 28 days.</p>
-<p>3 Coding of deaths by underlying cause for the latest week is not yet complete.</p>
-<p>4 Does not include deaths where age is either missing or not yet fully coded. For this reason counts of ‘Persons’, ‘Males’ and ‘Females’ may not sum to ‘Total Deaths, all ages’.</p>
-<p>5 Does not include deaths of those resident outside England and Wales or those records where the place of residence is either missing or not yet fully coded. For this reason counts for “Deaths by Region of usual residence” may not sum to “Total deaths, all ages”.</p>
-</div>
-<div id="later-confirmation-of-deaths" class="section level3">
-<h3>Later confirmation of deaths</h3>
-<p>Aggregate numbers of deaths are later confirmed and released in by <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/deaths/datasets/monthlyfiguresondeathsregisteredbyareaofusualresidence">ONS monthly</a>. Numbers are released at a lower geographical level to the weekly data.</p>
-</div>
-<div id="preparation-of-data" class="section level2">
-<h2>Preparation of data</h2>
-<p>In order to prepare this data for analysis the worksheet for weekly figures was extracted and the data was moved to long form and merged together over the available years. This was extracted in April 2020 when full previous years’ data was available.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(NHSRdatasets)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>ons_mortality <span class="ot">&lt;-</span> NHSRdatasets<span class="sc">::</span>ons_mortality</span></code></pre></div>
+<p>This vignette details why the <code>ons_mortality</code> dataset was
+created and how to load it.</p>
+<div id="deaths-registered-weekly-in-england-and-wales-provisional" class="section level1">
+<h1>Deaths registered weekly in England and Wales, provisional</h1>
+<p>Provisional counts of the number of deaths registered in England and
+Wales, by age, sex and region, from week commencing 8th January 2010 to
+3rd April 2020.</p>
+<p>This data has been made available through <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Office
+of National Statistics under the Open Government Licence</a> but is made
+available in wide form across separate year’s Excel spreadsheets. These
+were brought together, tidied in a way they could be merged together and
+produced in long form using the code in the
+<code>vignette(&quot;create_ons_mortality&quot;)</code> and a blog can be found on
+the <a href="https://nhsrcommunity.com/blog/building-the-ons-mortality-dataset.html">NHS-R
+Community website</a>.</p>
+<p>This data continues to be made available by ONS but is not added to
+this dataset. Corrections may have occurred too between this data
+snapshot and what is available through the ONS website.</p>
 <p>The dataset contains:</p>
 <ul>
-<li><strong>category_1:</strong> character, containing the names of the groups for counts, e.g. “Total deaths”, “all ages”.</li>
-<li><strong>category_2:</strong> character, subcategory of names of groups where necessary, e.g. details of region: “East”, details of age bands “15-44”.</li>
-<li><strong>counts:</strong> numeric, numbers of deaths in whole numbers and average numbers with decimal points. To retain the integrity of the format this column data is left as character.</li>
-<li><strong>date:</strong> date, format is yyyy-mm-dd; all dates are a Friday.</li>
-<li><strong>week_no:</strong> integer, each week in a year is numbered sequentially.</li>
+<li><strong>category_1:</strong> character with categories that relate
+to grouped data like Persons, Males and Females but also for some other
+parts of the Excel dataset that aren’t headers like “average of same
+week over 5 years”</li>
+<li><strong>category_2:</strong> character with categories for grouped
+ages, age bands and regions as well as text from Excel spreadsheets like
+“v 2013 (IRIS)”</li>
+<li><strong>counts:</strong> numeric as counts of deaths recorded</li>
+<li><strong>date:</strong> date format as yyyy-mm-dd</li>
+<li><strong>week_no:</strong> integer relating to the week number
+starting at the first week of the year</li>
 </ul>
+<div id="exploring-the-data" class="section level2">
+<h2>Exploring the data</h2>
+<p>Looking at the unique values in <code>category_1</code> using base R
+which produces the data output as a data frame</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">unique</span>(ons_mortality<span class="sc">$</span>category_1)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Total deaths&quot;                                                                         </span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; [2] &quot;All respiratory diseases (ICD-10 J00-J99) ICD-10&quot;                                     </span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; [3] &quot;Persons&quot;                                                                              </span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt; [4] &quot;Males&quot;                                                                                </span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; [5] &quot;Females&quot;                                                                              </span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; [6] &quot;Region&quot;                                                                               </span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; [7] NA                                                                                     </span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; [8] &quot;average of same week over 5 years&quot;                                                    </span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; [9] &quot;Deaths where COVID-19 was mentioned on the death certificate (ICD-10 U07.1 and U07.2)&quot;</span></span></code></pre></div>
+<p>or using dplyr which produces the data output as a tibble</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>ons_mortality <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">distinct</span>(category_1)</span></code></pre></div>
+<p>there is a category <code>NA</code> which may not have information
+that can be used. When filtering for <code>NA</code> using
+<code>dplyr</code> we can combine it with the base R function
+<code>is.na()</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>ons_mortality <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="fu">is.na</span>(category_1))</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 52 × 5</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt;    category_1 category_2 counts date       week_no</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;       &lt;dbl&gt; &lt;date&gt;       &lt;int&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt;  1 &lt;NA&gt;       &lt;NA&gt;         1779 2014-01-03       1</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt;  2 &lt;NA&gt;       &lt;NA&gt;         1925 2014-01-10       2</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt;  3 &lt;NA&gt;       &lt;NA&gt;           NA 2014-01-17       3</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt;  4 &lt;NA&gt;       &lt;NA&gt;           NA 2014-01-24       4</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt;  5 &lt;NA&gt;       &lt;NA&gt;           NA 2014-01-31       5</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt;  6 &lt;NA&gt;       &lt;NA&gt;           NA 2014-02-07       6</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt;  7 &lt;NA&gt;       &lt;NA&gt;           NA 2014-02-14       7</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt;  8 &lt;NA&gt;       &lt;NA&gt;           NA 2014-02-21       8</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt;  9 &lt;NA&gt;       &lt;NA&gt;           NA 2014-02-28       9</span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt; 10 &lt;NA&gt;       &lt;NA&gt;           NA 2014-03-07      10</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt; # ℹ 42 more rows</span></span></code></pre></div>
+<p>Incidentally to remove rows with <code>NA</code> an <code>!</code> is
+needed before the function in order to negate it</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>ons_mortality <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(category_1))</span></code></pre></div>
+<p>Or the function <code>filter_out()</code> can be used which can make
+this easier to read as it may be easy to overlook a single character
+<code>!</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>ons_mortality <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter_out</span>(<span class="fu">is.na</span>(category_1))</span></code></pre></div>
+<p>There are 52 rows with <code>category_1</code> that is
+<code>NA</code> and to view them all that’s possible in the console by
+extending the tibble view with</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt; Warning: package &#39;magrittr&#39; was built under R version 4.5.3</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;magrittr&#39;</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:purrr&#39;:</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt;     set_names</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:tidyr&#39;:</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt;     extract</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>ons_mortality <span class="sc">|&gt;</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="fu">is.na</span>(category_1)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="fu">nrow</span>(.))</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt; # A tibble: 52 × 5</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co">#&gt;    category_1 category_2 counts date       week_no</span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;       &lt;dbl&gt; &lt;date&gt;       &lt;int&gt;</span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co">#&gt;  1 &lt;NA&gt;       &lt;NA&gt;         1779 2014-01-03       1</span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="co">#&gt;  2 &lt;NA&gt;       &lt;NA&gt;         1925 2014-01-10       2</span></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a><span class="co">#&gt;  3 &lt;NA&gt;       &lt;NA&gt;           NA 2014-01-17       3</span></span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a><span class="co">#&gt;  4 &lt;NA&gt;       &lt;NA&gt;           NA 2014-01-24       4</span></span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a><span class="co">#&gt;  5 &lt;NA&gt;       &lt;NA&gt;           NA 2014-01-31       5</span></span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a><span class="co">#&gt;  6 &lt;NA&gt;       &lt;NA&gt;           NA 2014-02-07       6</span></span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a><span class="co">#&gt;  7 &lt;NA&gt;       &lt;NA&gt;           NA 2014-02-14       7</span></span>
+<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a><span class="co">#&gt;  8 &lt;NA&gt;       &lt;NA&gt;           NA 2014-02-21       8</span></span>
+<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a><span class="co">#&gt;  9 &lt;NA&gt;       &lt;NA&gt;           NA 2014-02-28       9</span></span>
+<span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a><span class="co">#&gt; 10 &lt;NA&gt;       &lt;NA&gt;           NA 2014-03-07      10</span></span>
+<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a><span class="co">#&gt; 11 &lt;NA&gt;       &lt;NA&gt;           NA 2014-03-14      11</span></span>
+<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a><span class="co">#&gt; 12 &lt;NA&gt;       &lt;NA&gt;           NA 2014-03-21      12</span></span>
+<span id="cb7-30"><a href="#cb7-30" tabindex="-1"></a><span class="co">#&gt; 13 &lt;NA&gt;       &lt;NA&gt;           NA 2014-03-28      13</span></span>
+<span id="cb7-31"><a href="#cb7-31" tabindex="-1"></a><span class="co">#&gt; 14 &lt;NA&gt;       &lt;NA&gt;           NA 2014-04-04      14</span></span>
+<span id="cb7-32"><a href="#cb7-32" tabindex="-1"></a><span class="co">#&gt; 15 &lt;NA&gt;       &lt;NA&gt;           NA 2014-04-11      15</span></span>
+<span id="cb7-33"><a href="#cb7-33" tabindex="-1"></a><span class="co">#&gt; 16 &lt;NA&gt;       &lt;NA&gt;           NA 2014-04-18      16</span></span>
+<span id="cb7-34"><a href="#cb7-34" tabindex="-1"></a><span class="co">#&gt; 17 &lt;NA&gt;       &lt;NA&gt;           NA 2014-04-25      17</span></span>
+<span id="cb7-35"><a href="#cb7-35" tabindex="-1"></a><span class="co">#&gt; 18 &lt;NA&gt;       &lt;NA&gt;           NA 2014-05-02      18</span></span>
+<span id="cb7-36"><a href="#cb7-36" tabindex="-1"></a><span class="co">#&gt; 19 &lt;NA&gt;       &lt;NA&gt;           NA 2014-05-09      19</span></span>
+<span id="cb7-37"><a href="#cb7-37" tabindex="-1"></a><span class="co">#&gt; 20 &lt;NA&gt;       &lt;NA&gt;           NA 2014-05-16      20</span></span>
+<span id="cb7-38"><a href="#cb7-38" tabindex="-1"></a><span class="co">#&gt; 21 &lt;NA&gt;       &lt;NA&gt;           NA 2014-05-23      21</span></span>
+<span id="cb7-39"><a href="#cb7-39" tabindex="-1"></a><span class="co">#&gt; 22 &lt;NA&gt;       &lt;NA&gt;           NA 2014-05-30      22</span></span>
+<span id="cb7-40"><a href="#cb7-40" tabindex="-1"></a><span class="co">#&gt; 23 &lt;NA&gt;       &lt;NA&gt;           NA 2014-06-06      23</span></span>
+<span id="cb7-41"><a href="#cb7-41" tabindex="-1"></a><span class="co">#&gt; 24 &lt;NA&gt;       &lt;NA&gt;           NA 2014-06-13      24</span></span>
+<span id="cb7-42"><a href="#cb7-42" tabindex="-1"></a><span class="co">#&gt; 25 &lt;NA&gt;       &lt;NA&gt;           NA 2014-06-20      25</span></span>
+<span id="cb7-43"><a href="#cb7-43" tabindex="-1"></a><span class="co">#&gt; 26 &lt;NA&gt;       &lt;NA&gt;           NA 2014-06-27      26</span></span>
+<span id="cb7-44"><a href="#cb7-44" tabindex="-1"></a><span class="co">#&gt; 27 &lt;NA&gt;       &lt;NA&gt;           NA 2014-07-04      27</span></span>
+<span id="cb7-45"><a href="#cb7-45" tabindex="-1"></a><span class="co">#&gt; 28 &lt;NA&gt;       &lt;NA&gt;           NA 2014-07-11      28</span></span>
+<span id="cb7-46"><a href="#cb7-46" tabindex="-1"></a><span class="co">#&gt; 29 &lt;NA&gt;       &lt;NA&gt;           NA 2014-07-18      29</span></span>
+<span id="cb7-47"><a href="#cb7-47" tabindex="-1"></a><span class="co">#&gt; 30 &lt;NA&gt;       &lt;NA&gt;           NA 2014-07-25      30</span></span>
+<span id="cb7-48"><a href="#cb7-48" tabindex="-1"></a><span class="co">#&gt; 31 &lt;NA&gt;       &lt;NA&gt;           NA 2014-08-01      31</span></span>
+<span id="cb7-49"><a href="#cb7-49" tabindex="-1"></a><span class="co">#&gt; 32 &lt;NA&gt;       &lt;NA&gt;           NA 2014-08-08      32</span></span>
+<span id="cb7-50"><a href="#cb7-50" tabindex="-1"></a><span class="co">#&gt; 33 &lt;NA&gt;       &lt;NA&gt;           NA 2014-08-15      33</span></span>
+<span id="cb7-51"><a href="#cb7-51" tabindex="-1"></a><span class="co">#&gt; 34 &lt;NA&gt;       &lt;NA&gt;           NA 2014-08-22      34</span></span>
+<span id="cb7-52"><a href="#cb7-52" tabindex="-1"></a><span class="co">#&gt; 35 &lt;NA&gt;       &lt;NA&gt;           NA 2014-08-29      35</span></span>
+<span id="cb7-53"><a href="#cb7-53" tabindex="-1"></a><span class="co">#&gt; 36 &lt;NA&gt;       &lt;NA&gt;           NA 2014-09-05      36</span></span>
+<span id="cb7-54"><a href="#cb7-54" tabindex="-1"></a><span class="co">#&gt; 37 &lt;NA&gt;       &lt;NA&gt;           NA 2014-09-12      37</span></span>
+<span id="cb7-55"><a href="#cb7-55" tabindex="-1"></a><span class="co">#&gt; 38 &lt;NA&gt;       &lt;NA&gt;           NA 2014-09-19      38</span></span>
+<span id="cb7-56"><a href="#cb7-56" tabindex="-1"></a><span class="co">#&gt; 39 &lt;NA&gt;       &lt;NA&gt;           NA 2014-09-26      39</span></span>
+<span id="cb7-57"><a href="#cb7-57" tabindex="-1"></a><span class="co">#&gt; 40 &lt;NA&gt;       &lt;NA&gt;           NA 2014-10-03      40</span></span>
+<span id="cb7-58"><a href="#cb7-58" tabindex="-1"></a><span class="co">#&gt; 41 &lt;NA&gt;       &lt;NA&gt;           NA 2014-10-10      41</span></span>
+<span id="cb7-59"><a href="#cb7-59" tabindex="-1"></a><span class="co">#&gt; 42 &lt;NA&gt;       &lt;NA&gt;           NA 2014-10-17      42</span></span>
+<span id="cb7-60"><a href="#cb7-60" tabindex="-1"></a><span class="co">#&gt; 43 &lt;NA&gt;       &lt;NA&gt;           NA 2014-10-24      43</span></span>
+<span id="cb7-61"><a href="#cb7-61" tabindex="-1"></a><span class="co">#&gt; 44 &lt;NA&gt;       &lt;NA&gt;           NA 2014-10-31      44</span></span>
+<span id="cb7-62"><a href="#cb7-62" tabindex="-1"></a><span class="co">#&gt; 45 &lt;NA&gt;       &lt;NA&gt;           NA 2014-11-07      45</span></span>
+<span id="cb7-63"><a href="#cb7-63" tabindex="-1"></a><span class="co">#&gt; 46 &lt;NA&gt;       &lt;NA&gt;           NA 2014-11-14      46</span></span>
+<span id="cb7-64"><a href="#cb7-64" tabindex="-1"></a><span class="co">#&gt; 47 &lt;NA&gt;       &lt;NA&gt;           NA 2014-11-21      47</span></span>
+<span id="cb7-65"><a href="#cb7-65" tabindex="-1"></a><span class="co">#&gt; 48 &lt;NA&gt;       &lt;NA&gt;           NA 2014-11-28      48</span></span>
+<span id="cb7-66"><a href="#cb7-66" tabindex="-1"></a><span class="co">#&gt; 49 &lt;NA&gt;       &lt;NA&gt;           NA 2014-12-05      49</span></span>
+<span id="cb7-67"><a href="#cb7-67" tabindex="-1"></a><span class="co">#&gt; 50 &lt;NA&gt;       &lt;NA&gt;           NA 2014-12-12      50</span></span>
+<span id="cb7-68"><a href="#cb7-68" tabindex="-1"></a><span class="co">#&gt; 51 &lt;NA&gt;       &lt;NA&gt;           NA 2014-12-19      51</span></span>
+<span id="cb7-69"><a href="#cb7-69" tabindex="-1"></a><span class="co">#&gt; 52 &lt;NA&gt;       &lt;NA&gt;           NA 2014-12-26      52</span></span></code></pre></div>
+<p>Notice that this code has used the pipe <code>%&gt;%</code> which
+comes from the package <code>magrittr</code> which is also in
+<code>tidyverse</code>. This pipe, rather than the base R |&gt; allows
+the data to pass to the next level which is seen as <code>.</code>.</p>
+<p>It’s not clear from this search what the counts 1779 and 1925 relate
+to (other than being from January 2014) and this can only be understood
+by going back to the original spreadsheets and data manipulation which
+can be found in the <code>vignette(&quot;create_ons_mortality&quot;)</code>.</p>
 </div>
-<div id="source-and-licence-acknowledgement" class="section level1">
-<h1>Source and licence acknowledgement</h1>
-<p>This data has been made available through Office of National Statistics under the <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence</a>.</p>
-<p>The main page for downloads is <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/deaths/datasets/weeklyprovisionalfiguresondeathsregisteredinenglandandwales">here</a>.</p>
-<div id="creating-the-dataset" class="section level2">
-<h2>Creating the dataset</h2>
-<p>Spreadsheets are in xls format from 2010 to 2019.</p>
-<p>Each week is released with a new file name listing the week number and all weeks for that year are included in the spreadsheet. Counts for weeks ahead are missing and listed as NA.</p>
-<p>When a year has passed it is renamed to the year name and does not change.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2019</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fbirthsdeathsandmarriages%2fdeaths%2fdatasets%2fweeklyprovisionalfiguresondeathsregisteredinenglandandwales%2f2019/publishedweek522019.xls&quot;</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">destfile =</span> <span class="st">&quot;2019Mortality.xls&quot;</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;wininet&quot;</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 2018</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fbirthsdeathsandmarriages%2fdeaths%2fdatasets%2fweeklyprovisionalfiguresondeathsregisteredinenglandandwales%2f2018/publishedweek522018withupdatedrespiratoryrow.xls&quot;</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">destfile =</span> <span class="st">&quot;2018Mortality.xls&quot;</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;wininet&quot;</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 2017</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fbirthsdeathsandmarriages%2fdeaths%2fdatasets%2fweeklyprovisionalfiguresondeathsregisteredinenglandandwales%2f2017/publishedweek522017.xls&quot;</span>,</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">destfile =</span> <span class="st">&quot;2017Mortality.xls&quot;</span>,</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;wininet&quot;</span>,</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 2016</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fbirthsdeathsandmarriages%2fdeaths%2fdatasets%2fweeklyprovisionalfiguresondeathsregisteredinenglandandwales%2f2016/publishedweek522016.xls&quot;</span>,</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">destfile =</span> <span class="st">&quot;2016Mortality.xls&quot;</span>,</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;wininet&quot;</span>,</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 2015</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fbirthsdeathsandmarriages%2fdeaths%2fdatasets%2fweeklyprovisionalfiguresondeathsregisteredinenglandandwales%2f2015/publishedweek2015.xls&quot;</span>,</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">destfile =</span> <span class="st">&quot;2015Mortality.xls&quot;</span>,</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;wininet&quot;</span>,</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co"># 2014</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fbirthsdeathsandmarriages%2fdeaths%2fdatasets%2fweeklyprovisionalfiguresondeathsregisteredinenglandandwales%2f2014/publishedweek2014.xls&quot;</span>,</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">destfile =</span> <span class="st">&quot;2014Mortality.xls&quot;</span>,</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;wininet&quot;</span>,</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="co"># 2013</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fbirthsdeathsandmarriages%2fdeaths%2fdatasets%2fweeklyprovisionalfiguresondeathsregisteredinenglandandwales%2f2013/publishedweek2013.xls&quot;</span>,</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  <span class="at">destfile =</span> <span class="st">&quot;2013Mortality.xls&quot;</span>,</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;wininet&quot;</span>,</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="co"># 2012</span></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fbirthsdeathsandmarriages%2fdeaths%2fdatasets%2fweeklyprovisionalfiguresondeathsregisteredinenglandandwales%2f2012/publishedweek2012.xls&quot;</span>,</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  <span class="at">destfile =</span> <span class="st">&quot;2012Mortality.xls&quot;</span>,</span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;wininet&quot;</span>,</span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="co"># 2011</span></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fbirthsdeathsandmarriages%2fdeaths%2fdatasets%2fweeklyprovisionalfiguresondeathsregisteredinenglandandwales%2f2011/publishedweek2011.xls&quot;</span>,</span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>  <span class="at">destfile =</span> <span class="st">&quot;2011Mortality.xls&quot;</span>,</span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;wininet&quot;</span>,</span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="co"># 2010</span></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fbirthsdeathsandmarriages%2fdeaths%2fdatasets%2fweeklyprovisionalfiguresondeathsregisteredinenglandandwales%2f2010/publishedweek2010.xls&quot;</span>,</span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>  <span class="at">destfile =</span> <span class="st">&quot;2010Mortality.xls&quot;</span>,</span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;wininet&quot;</span>,</span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>  <span class="at">mode =</span> <span class="st">&quot;wb&quot;</span>)</span></code></pre></div>
-</div>
-<div id="extracting-worksheets-to-csv" class="section level2">
-<h2>Extracting worksheets to csv</h2>
-<p>The data can be found in the worksheet called Weekly figures “date/year”. Other worksheets in spreadsheets 2010 to 2019 are:</p>
-<ul>
-<li>Contents</li>
-<li>Information</li>
-<li>Terms and conditions</li>
-<li>Weekly figures <year></li>
-<li>Related publications</li>
-</ul>
-<p>The following code finds the tab name and then creates a csv file for each tab/worksheet.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>files_list <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">&quot;working_files&quot;</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">pattern =</span> <span class="st">&quot;*.xls&quot;</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>read_then_csv <span class="ot">&lt;-</span> <span class="cf">function</span>(sheet, path) {</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  pathbase <span class="ot">&lt;-</span> path <span class="sc">%&gt;%</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">basename</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    tools<span class="sc">::</span><span class="fu">file_path_sans_ext</span>()</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  path <span class="sc">%&gt;%</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_excel</span>(<span class="at">sheet =</span> sheet) <span class="sc">%&gt;%</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">write_csv</span>(<span class="fu">paste0</span>(pathbase, <span class="st">&quot;-&quot;</span>, sheet, <span class="st">&quot;.csv&quot;</span>))</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(files_list)){</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  path <span class="ot">&lt;-</span> <span class="fu">paste0</span>(files_list[j])</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  path <span class="sc">%&gt;%</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">excel_sheets</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_names</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">map</span>(read_then_csv, <span class="at">path =</span> path)</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-</div>
-<div id="loading-the-weekly-figure-worksheets" class="section level2">
-<h2>Loading the weekly figure worksheets</h2>
-<p>From 2010 to 2015 the tab name was Weekly Figures then it changed capitalisation to Weekly figures.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>files_list_sheets <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">&quot;working_files&quot;</span>,</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">pattern =</span> <span class="st">&quot;Weekly&quot;</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                         )</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> files_list_sheets) {</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">read_csv</span>((i), <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">.default =</span> <span class="fu">col_character</span>()))</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">assign</span>(i, x)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-</div>
-<div id="format-data-functions" class="section level2">
-<h2>Format data functions</h2>
-<p>Two functions were required to format the spreadsheets as there were changes to the layout from 2016.</p>
-<p>Packages used:</p>
-<ul>
-<li><strong>janitor:</strong> a specific package for cleaning data from Excel used here to remove the blank lines and columns, convert Excel serial numbers to dates and to format all column headers by removing spaces in those header names and removing capitalisation.</li>
-<li><strong>dplyr:</strong> specifically dplyr for data manipulation (already loaded earlier).</li>
-<li><strong>tidyr:</strong> for pivoting data from wide to long.</li>
-<li><strong>stringi:</strong> a package to works with strings and was used to find certain characters or words.</li>
-<li><strong>lubridate:</strong> a package to work with dates and used here to format dates to the same format.</li>
-</ul>
-<div id="section" class="section level3">
-<h3>2010 - 2015</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringi)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Column names that are not related to data points to be removed. This is the same for all years&#39; spreadsheets.</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that single quotes are used for the categories as one sentence includes &#39;&#39; in the text (4). </span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>remove_lookup <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;week over the previous five years1&#39;</span>,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;Deaths by underlying cause2,3&#39;</span>,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;Footnotes&#39;</span>,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;1 This average is based on the actual number of death registrations recorded for each corresponding week over the previous five years. Moveable public holidays, when register offices are closed, affect the number of registrations made in the published weeks and in the corresponding weeks in previous years.&#39;</span>,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;2 Counts of deaths by underlying cause exclude deaths at age under 28 days.&#39;</span>,</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;3 Coding of deaths by underlying cause for the latest week is not yet complete.&#39;</span>,</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;4Does not include deaths where age is either missing or not yet fully coded. For this reason counts of &#39;Persons&#39;, &#39;Males&#39; and &#39;Females&#39; may not sum to &#39;Total Deaths, all ages&#39;.&quot;</span>,</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;5 Does not include deaths of those resident outside England and Wales or those records where the place of residence is either missing or not yet fully coded. For this reason counts for &quot;Deaths by Region of usual residence&quot; may not sum to &quot;Total deaths, all ages&quot;.&#39;</span>,</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;Source: Office for National Statistics&#39;</span>,</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;Deaths by age group&#39;</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>formatFunction <span class="ot">&lt;-</span> <span class="cf">function</span>(file){</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>ONS <span class="ot">&lt;-</span> file <span class="sc">%&gt;%</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  clean_names <span class="sc">%&gt;%</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">remove_empty</span>(<span class="fu">c</span>(<span class="st">&quot;rows&quot;</span>,<span class="st">&quot;cols&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>contents <span class="sc">%in%</span> remove_lookup) <span class="sc">%&gt;%</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># useful categories are found in the column contents but also include the footnote number</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Category =</span> <span class="fu">case_when</span>(<span class="fu">is.na</span>(x2) <span class="sc">&amp;</span> <span class="fu">str_detect</span>(contents, <span class="st">&quot;Region&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Region&quot;</span>,</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">is.na</span>(x2) <span class="sc">&amp;</span> <span class="fu">str_detect</span>(contents, <span class="st">&quot;Persons&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Persons&quot;</span>,</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">is.na</span>(x2) <span class="sc">&amp;</span> <span class="fu">str_detect</span>(contents, <span class="st">&quot;Females&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Females&quot;</span>,</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">is.na</span>(x2) <span class="sc">&amp;</span> <span class="fu">str_detect</span>(contents, <span class="st">&quot;Males&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Males&quot;</span>)</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(contents, Category, <span class="fu">everything</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>  <span class="co"># to ensure data like Persons, Males and Females </span></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fill</span>(Category) <span class="sc">%&gt;%</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>  <span class="co"># categories with Persons, Males and Females in the original column do not correspond directly to data points (wide form data) so are removed by referring to str_detect to find the word</span></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(contents, <span class="st">&quot;Persons&quot;</span>),</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">str_detect</span>(contents, <span class="st">&quot;Males&quot;</span>),</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">str_detect</span>(contents, <span class="st">&quot;Females&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the two columns for Category and contents are merged to Categories to bring the Category column first. Some categories don&#39;t have subcategories and these are preceded by NA_ with this merge</span></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">&quot;Categories&quot;</span>, Category, contents) <span class="sc">%&gt;%</span></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Categories <span class="sc">!=</span> <span class="st">&quot;Region_Deaths by Region of usual residence 5&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the NA_ is removed from some of the category names</span></span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Categories =</span> <span class="fu">case_when</span>(<span class="fu">str_detect</span>(Categories, <span class="st">&quot;NA_&quot;</span>) <span class="sc">~</span> <span class="fu">str_replace</span>(Categories, <span class="st">&quot;NA_&quot;</span>, <span class="st">&quot;&quot;</span>),</span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>                                <span class="cn">TRUE</span> <span class="sc">~</span> Categories))</span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Push date row to column names</span></span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>onsFormattedJanitor <span class="ot">&lt;-</span> <span class="fu">row_to_names</span>(ONS, <span class="dv">3</span>)</span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>  <span class="co"># move data from wide to long form using pivot_longer</span></span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> onsFormattedJanitor <span class="sc">%&gt;%</span></span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="st">`</span><span class="at">Week ended</span><span class="st">`</span>,</span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;allDates&quot;</span>,</span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;counts&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>  <span class="co"># some spreadsheets import with Excel serial numbers for dates and others as dates, janitor is used to correct this</span></span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">realDate =</span> <span class="fu">dmy</span>(allDates),</span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>         <span class="at">ExcelSerialDate =</span> <span class="fu">case_when</span>(<span class="fu">stri_length</span>(allDates) <span class="sc">==</span> <span class="dv">5</span> <span class="sc">~</span> <span class="fu">excel_numeric_to_date</span>(<span class="fu">as.numeric</span>(allDates), <span class="at">date_system =</span> <span class="st">&quot;modern&quot;</span>)),</span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>         <span class="at">date =</span> <span class="fu">case_when</span>(<span class="fu">is.na</span>(realDate) <span class="sc">~</span> ExcelSerialDate,</span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>                          <span class="cn">TRUE</span> <span class="sc">~</span> realDate)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Week ended</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the week number is replaced as this was lost with the moving of dates to the column headers</span></span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">week_no =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Category is a staging name as this is followed by a splitting of the column into category_1 and category_2</span></span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Category =</span> <span class="st">`</span><span class="at">Week ended</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>  <span class="co"># to split the columns there are various characters used as a split point &quot;,&quot;, &quot;-&quot;, and &quot;:&quot; in the respiratory category the version is denoted by &quot;v&quot;</span></span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">category_1 =</span> <span class="fu">case_when</span>(<span class="fu">str_detect</span>(Category, <span class="st">&quot;,&quot;</span>) <span class="sc">~</span></span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">substr</span>(Category,<span class="dv">1</span>,<span class="fu">str_locate</span>(Category, <span class="st">&quot;,&quot;</span>) <span class="sc">-</span><span class="dv">1</span>),</span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">str_detect</span>(Category, <span class="st">&quot;:&quot;</span>) <span class="sc">~</span></span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">substr</span>(Category,<span class="dv">1</span>,<span class="fu">str_locate</span>(Category, <span class="st">&quot;:&quot;</span>) <span class="sc">-</span><span class="dv">1</span>),</span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">str_detect</span>(Category, <span class="st">&quot;_&quot;</span>) <span class="sc">~</span></span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">substr</span>(Category,<span class="dv">1</span>,<span class="fu">str_locate</span>(Category, <span class="st">&quot;_&quot;</span>) <span class="sc">-</span><span class="dv">1</span>),</span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">str_detect</span>(Category, <span class="st">&quot;respiratory&quot;</span>)  <span class="sc">~</span></span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;All respiratory diseases (ICD-10 J00-J99) ICD-10&quot;</span>),</span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>         <span class="at">category_2 =</span> <span class="fu">case_when</span>(<span class="fu">str_detect</span>(Category, <span class="st">&quot;,&quot;</span>) <span class="sc">~</span></span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">substr</span>(Category,<span class="fu">str_locate</span>(Category, <span class="st">&quot;, &quot;</span>) <span class="sc">+</span><span class="dv">2</span>, <span class="fu">str_length</span>(Category)),</span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">str_detect</span>(Category, <span class="st">&quot;:&quot;</span>) <span class="sc">~</span></span>
-<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">substr</span>(Category,<span class="fu">str_locate</span>(Category, <span class="st">&quot;: &quot;</span>) <span class="sc">+</span><span class="dv">2</span>, <span class="fu">str_length</span>(Category)),</span>
-<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">str_detect</span>(Category, <span class="st">&quot;_&quot;</span>) <span class="sc">~</span></span>
-<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">substr</span>(Category,<span class="fu">str_locate</span>(Category, <span class="st">&quot;_&quot;</span>) <span class="sc">+</span><span class="dv">1</span>, <span class="fu">str_length</span>(Category)),</span>
-<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">str_detect</span>(Category, <span class="st">&quot;respiratory&quot;</span>)  <span class="sc">~</span></span>
-<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">substr</span>(Category,<span class="fu">str_locate</span>(Category, <span class="st">&quot;v&quot;</span>), <span class="fu">str_length</span>(Category)) ),</span>
-<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>         </span>
-<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>         <span class="co"># the data for Total deaths: average of corresponding week over the previous 5 years is split over two cells in the spreasheet</span></span>
-<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>         <span class="at">category_2 =</span> <span class="fu">recode</span>(category_2,</span>
-<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>                             <span class="st">&quot;average of corresponding&quot;</span> <span class="ot">=</span> <span class="st">&quot;average of same week over 5 years&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(category_1,</span>
-<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a>         category_2,</span>
-<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a>         counts,</span>
-<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>         date,</span>
-<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a>         week_no</span>
-<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">%&gt;%</span></span>
-<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2011 requires this code to remove rows where there are no counts and because there are 2 rows relating to respiratory death numbers (see the Respiratory section) the previous methodology has been included in the spreadsheet with : for counts. This code does not affect other years&#39; data/</span></span>
-<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(counts),</span>
-<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a>         counts <span class="sc">!=</span> <span class="st">&quot;:&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fill</span>(category_1)</span>
-<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span>(x)</span>
-<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a>Mortality2010 <span class="ot">&lt;-</span> <span class="fu">formatFunction</span>(<span class="st">`</span><span class="at">working_files/Weekly/2010Mortality-Weekly Figures 2010.csv</span><span class="st">`</span>)</span>
-<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a><span class="co"># 2011 has two lines relating to respiratory, v 2001 only has one data point and the rest of the year is 2010</span></span>
-<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a>Mortality2011 <span class="ot">&lt;-</span> <span class="fu">formatFunction</span>(<span class="st">`</span><span class="at">working_files/Weekly/2011Mortality-Weekly Figures 2011.csv</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">category_2 =</span> <span class="fu">case_when</span>(<span class="fu">is.na</span>(category_2) <span class="sc">&amp;</span> category_1 <span class="sc">==</span> <span class="st">&quot;All respiratory diseases (ICD-10 J00-J99) ICD-10&quot;</span> <span class="sc">~</span> <span class="st">&quot;v 2010&quot;</span>,</span>
-<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a>                                <span class="cn">TRUE</span> <span class="sc">~</span> category_2))</span>
-<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a>Mortality2012 <span class="ot">&lt;-</span> <span class="fu">formatFunction</span>(<span class="st">`</span><span class="at">working_files/Weekly/2012Mortality-Weekly Figures 2012.csv</span><span class="st">`</span>)</span>
-<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a>Mortality2013 <span class="ot">&lt;-</span> <span class="fu">formatFunction</span>(<span class="st">`</span><span class="at">working_files/Weekly/2013Mortality-Weekly Figures 2013.csv</span><span class="st">`</span>)</span>
-<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a>Mortality2014 <span class="ot">&lt;-</span> <span class="fu">formatFunction</span>(<span class="st">`</span><span class="at">working_files/Weekly/2014Mortality-Weekly Figures 2014.csv</span><span class="st">`</span>)</span>
-<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a>Mortality2015 <span class="ot">&lt;-</span> <span class="fu">formatFunction</span>(<span class="st">`</span><span class="at">working_files/Weekly/2015Mortality-Weekly Figures 2015.csv</span><span class="st">`</span>)</span></code></pre></div>
-<div id="format-data-2016---2019" class="section level4">
-<h4>Format data 2016 - 2019</h4>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>formatFunction2016 <span class="ot">&lt;-</span> <span class="cf">function</span>(file){</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  ONS <span class="ot">&lt;-</span> file <span class="sc">%&gt;%</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    clean_names <span class="sc">%&gt;%</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># An extra column has been added for region codes (not included in the dataset) meaning contents are now found in the janitor generated column name x2</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">x2 =</span> <span class="fu">case_when</span>(<span class="fu">is.na</span>(x2) <span class="sc">~</span> contents,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                              <span class="cn">TRUE</span> <span class="sc">~</span> x2)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">remove_empty</span>(<span class="fu">c</span>(<span class="st">&quot;rows&quot;</span>,<span class="st">&quot;cols&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>contents) <span class="sc">%&gt;%</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span>x2 <span class="sc">%in%</span> remove_lookup) <span class="sc">%&gt;%</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Region has changed to region</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Category =</span> <span class="fu">case_when</span>(<span class="fu">is.na</span>(x3) <span class="sc">&amp;</span> <span class="fu">str_detect</span>(x2, <span class="st">&quot;region&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Region&quot;</span>,</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">is.na</span>(x3) <span class="sc">&amp;</span> <span class="fu">str_detect</span>(x2, <span class="st">&quot;Persons&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Persons&quot;</span>,</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">is.na</span>(x3) <span class="sc">&amp;</span> <span class="fu">str_detect</span>(x2, <span class="st">&quot;Females&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Females&quot;</span>,</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">is.na</span>(x3) <span class="sc">&amp;</span> <span class="fu">str_detect</span>(x2, <span class="st">&quot;Males&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Males&quot;</span>,</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                                <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span>)</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(x2, Category, <span class="fu">everything</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">fill</span>(Category) <span class="sc">%&gt;%</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(x2, <span class="st">&#39;Persons&#39;</span>),</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>           <span class="sc">!</span><span class="fu">str_detect</span>(x2, <span class="st">&#39;Males&#39;</span>),</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>           <span class="sc">!</span><span class="fu">str_detect</span>(x2, <span class="st">&#39;Females&#39;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unite</span>(<span class="st">&quot;Categories&quot;</span>, Category, x2) <span class="sc">%&gt;%</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Categories <span class="sc">!=</span> <span class="st">&#39;Region_Deaths by Region of usual residence 5&#39;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Categories =</span> <span class="fu">case_when</span>(<span class="fu">str_detect</span>(Categories, <span class="st">&quot;NA_&quot;</span>) <span class="sc">~</span> <span class="fu">str_replace</span>(Categories, <span class="st">&quot;NA_&quot;</span>, <span class="st">&quot;&quot;</span>),</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>                                  <span class="cn">TRUE</span> <span class="sc">~</span> Categories))</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Push date row to column names</span></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>  onsFormattedJanitor <span class="ot">&lt;-</span> <span class="fu">row_to_names</span>(ONS, <span class="dv">3</span>)</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>  <span class="co"># move data from wide to long form using pivot_longer</span></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> onsFormattedJanitor <span class="sc">%&gt;%</span></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="st">`</span><span class="at">Week ended</span><span class="st">`</span>,</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>                 <span class="at">names_to =</span> <span class="st">&quot;allDates&quot;</span>,</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>                 <span class="at">values_to =</span> <span class="st">&quot;counts&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">realDate =</span> <span class="fu">dmy</span>(allDates),</span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>           <span class="at">ExcelSerialDate =</span> <span class="fu">case_when</span>(<span class="fu">stri_length</span>(allDates) <span class="sc">==</span> <span class="dv">5</span> <span class="sc">~</span> <span class="fu">excel_numeric_to_date</span>(<span class="fu">as.numeric</span>(allDates), <span class="at">date_system =</span> <span class="st">&quot;modern&quot;</span>)),</span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>           <span class="at">date =</span> <span class="fu">case_when</span>(<span class="fu">is.na</span>(realDate) <span class="sc">~</span> ExcelSerialDate,</span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>                            <span class="cn">TRUE</span> <span class="sc">~</span> realDate)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Week ended</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">week_no =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">Category =</span> <span class="st">`</span><span class="at">Week ended</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">category_1 =</span> <span class="fu">case_when</span>(<span class="fu">str_detect</span>(Category, <span class="st">&quot;,&quot;</span>) <span class="sc">~</span></span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">substr</span>(Category,<span class="dv">1</span>,<span class="fu">str_locate</span>(Category, <span class="st">&quot;,&quot;</span>) <span class="sc">-</span><span class="dv">1</span>),</span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">str_detect</span>(Category, <span class="st">&quot;:&quot;</span>) <span class="sc">~</span></span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">substr</span>(Category,<span class="dv">1</span>,<span class="fu">str_locate</span>(Category, <span class="st">&quot;:&quot;</span>) <span class="sc">-</span><span class="dv">1</span>),</span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">str_detect</span>(Category, <span class="st">&quot;_&quot;</span>) <span class="sc">~</span></span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">substr</span>(Category,<span class="dv">1</span>,<span class="fu">str_locate</span>(Category, <span class="st">&quot;_&quot;</span>) <span class="sc">-</span><span class="dv">1</span>),</span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">str_detect</span>(Category, <span class="st">&quot;respiratory&quot;</span>)  <span class="sc">~</span></span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;All respiratory diseases (ICD-10 J00-J99) ICD-10&quot;</span>),</span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>         <span class="at">category_2 =</span> <span class="fu">case_when</span>(<span class="fu">str_detect</span>(Category, <span class="st">&quot;,&quot;</span>) <span class="sc">~</span></span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">substr</span>(Category,<span class="fu">str_locate</span>(Category, <span class="st">&quot;, &quot;</span>) <span class="sc">+</span><span class="dv">2</span>, <span class="fu">str_length</span>(Category)),</span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">str_detect</span>(Category, <span class="st">&quot;:&quot;</span>) <span class="sc">~</span></span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">substr</span>(Category,<span class="fu">str_locate</span>(Category, <span class="st">&quot;: &quot;</span>) <span class="sc">+</span><span class="dv">2</span>, <span class="fu">str_length</span>(Category)),</span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">str_detect</span>(Category, <span class="st">&quot;_&quot;</span>) <span class="sc">~</span></span>
-<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">substr</span>(Category,<span class="fu">str_locate</span>(Category, <span class="st">&quot;_&quot;</span>) <span class="sc">+</span><span class="dv">1</span>, <span class="fu">str_length</span>(Category)),</span>
-<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">str_detect</span>(Category, <span class="st">&quot;respiratory&quot;</span>)  <span class="sc">~</span></span>
-<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">substr</span>(Category,<span class="fu">str_locate</span>(Category, <span class="st">&quot;v&quot;</span>), <span class="fu">str_length</span>(Category)) ),</span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>         <span class="at">category_2 =</span> <span class="fu">recode</span>(category_2,</span>
-<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>                             <span class="st">&quot;average of corresponding&quot;</span> <span class="ot">=</span> <span class="st">&quot;average of same week over 5 years&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(category_1,</span>
-<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>           category_2,</span>
-<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>           counts,</span>
-<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>           date,</span>
-<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>           week_no</span>
-<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(counts)) </span>
-<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(x)</span>
-<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>Mortality2016 <span class="ot">&lt;-</span> <span class="fu">formatFunction2016</span>(<span class="st">`</span><span class="at">working_files/Weekly/2016Mortality-Weekly figures 2016.csv</span><span class="st">`</span>)</span>
-<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>Mortality2017 <span class="ot">&lt;-</span> <span class="fu">formatFunction2016</span>(<span class="st">`</span><span class="at">working_files/Weekly/2017Mortality-Weekly figures 2017.csv</span><span class="st">`</span>)</span>
-<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>Mortality2018 <span class="ot">&lt;-</span> <span class="fu">formatFunction2016</span>(<span class="st">`</span><span class="at">working_files/Weekly/2018Mortality-Weekly figures 2018.csv</span><span class="st">`</span>)</span>
-<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>Mortality2019 <span class="ot">&lt;-</span> <span class="fu">formatFunction2016</span>(<span class="st">`</span><span class="at">working_files/Weekly/2019Mortality-Weekly figures 2019.csv</span><span class="st">`</span>)</span></code></pre></div>
-</div>
-</div>
-</div>
-<div id="bind-together" class="section level2">
-<h2>Bind together</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ons_mortality <span class="ot">&lt;-</span> <span class="fu">do.call</span>(<span class="st">&quot;rbind&quot;</span>, <span class="fu">list</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                      Mortality2010,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                      Mortality2011,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                      Mortality2012,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                      Mortality2013,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                      Mortality2014,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                      Mortality2015,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                      Mortality2016,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                      Mortality2017,</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                      Mortality2018,</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                      Mortality2019))</span></code></pre></div>
-</div>
-<div id="load-the-data" class="section level2">
-<h2>Load the data</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHSRdatasets)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;ons_mortality&quot;</span>)</span></code></pre></div>
-</div>
-<div id="respiratory" class="section level2">
-<h2>Respiratory</h2>
-<p>Deaths by underlying cause of respiratory diseases All respiratory diseases (ICD-10 J00-J99) appear as:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ons_mortality <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">year</span>(date)) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, category_1, category_2) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, category_1, category_2) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(category_1 <span class="sc">==</span> <span class="st">&#39;All respiratory diseases (ICD-10 J00-J99) ICD-10&#39;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span>)</span></code></pre></div>
-<p>Notes from the spreadsheets in relation to these methodology changes:</p>
-<div id="section-1" class="section level3">
-<h3>2011</h3>
-<ul>
-<li>Respiratory deaths for 2011 are coded to the new version of ICD-10 while for 2010 they are coded to the previous version. Week 1 2011 has been coded to both versions to give an indication of the impact of the change.</li>
-</ul>
-</div>
-<div id="section-2" class="section level3">
-<h3>2014</h3>
-<ul>
-<li><p>For deaths registered from January 2014, cause of death is coded to the ICD-10 classification using IRIS software. Further information about the implementation of the software is available on the ONS website.</p></li>
-<li><p>All deaths registered in week 2 were dual-coded using both ICD-10 v2010 (NCHS) and ICD-10 v2013 (IRIS). An information note providing the preliminary findings on the impact of the implementation of IRIS software for ICD-10 cause of death coding on mortality statistics in England and Wales is available on the ONS website.</p></li>
-</ul>
-</div>
-<div id="section-3" class="section level3">
-<h3>2015</h3>
-<ul>
-<li>For deaths registered from January 2014, cause of death is coded to the ICD-10 classification using IRIS software. Further information about the <a href="https://webarchive.nationalarchives.gov.uk/20160106020045/http://www.ons.gov.uk/ons/guide-method/user-guidance/health-and-life-events/Changes-to-cause-of-death-coding-in-England-and-Wales/index.html">implementation of the software</a> is available on the ONS website.</li>
-</ul>
-</div>
-</div>
-<div id="age-bands" class="section level2">
-<h2>Age bands</h2>
-<p>Numbers are provided for categories: Persons, Females and Males.</p>
-<p>As detailed in the notes, if the age is missing or not coded at the time of release then the counts of ‘Persons’, ‘Males’ and ‘Females’ may not sum to ‘Total Deaths, all ages’.</p>
-<p>Note that these age bands were changed in 2020 releases.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ons_mortality <span class="sc">%&gt;%</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(category_1, category_2) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(category_1, category_2) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(category_1 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;Persons&#39;</span>,<span class="st">&#39;Females&#39;</span>,<span class="st">&#39;Males&#39;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span>)</span></code></pre></div>
-</div>
-<div id="remove-working_files-folder" class="section level2">
-<h2>Remove working_files folder</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unlink</span>(<span class="st">&quot;working_files&quot;</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div id="small-charts-exploration" class="section level2">
+<h2>Small charts exploration</h2>
+<p>A line chart to see all the Regions using <code>ggplot2</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>by_region <span class="ot">&lt;-</span> ons_mortality <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(category_1 <span class="sc">==</span> <span class="st">&quot;Region&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(ggplot2<span class="sc">::</span><span class="fu">aes</span>(date, counts, <span class="at">colour =</span> category_2)) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">geom_point</span>()</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>by_region</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+<p>In the view of small charts using the facet grid to show each area
+separately</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>by_region <span class="sc">+</span> ggplot2<span class="sc">::</span><span class="fu">facet_wrap</span>(<span class="sc">~</span>category_2)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
 </div>
 </div>
 

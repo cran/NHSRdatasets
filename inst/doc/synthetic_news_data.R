@@ -4,43 +4,64 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-## ----observed_data_generation-------------------------------------------------
-library(readr)
+## -----------------------------------------------------------------------------
+library(NHSRdatasets)
+
+NEWS_var <- NHSRdatasets::synthetic_news_data
+
+## -----------------------------------------------------------------------------
+library(NHSRdatasets)
 library(dplyr)
-df <- suppressWarnings(read_csv("https://raw.githubusercontent.com/StatsGary/SyntheticNEWSData/main/observed_news_data.csv") %>% 
-  dplyr::select(everything(), -X1))
 
-glimpse(df)
+sbp_news <- NEWS_var |>
+  dplyr::mutate(sbp = as.numeric(syst)) |>
+  dplyr::mutate(news = dplyr::case_when(
+    sbp <= 90 | sbp >= 220 ~ 3,
+    sbp %in% c(91:100) ~ 2,
+    sbp %in% c(101:110) ~ 1,
+    !is.numeric(pulse) ~ NA_real_,
+    TRUE ~ 0
+  ))
 
+## -----------------------------------------------------------------------------
+hr_news <- NEWS_var |>
+  dplyr::mutate(pulse = as.numeric(pulse)) |>
+  dplyr::mutate(news = dplyr::case_when(
+    pulse <= 40 | pulse >= 131 ~ 3,
+    pulse %in% c(111:130) ~ 2,
+    pulse %in% c(41:50, 91:110) ~ 1,
+    !is.numeric(pulse) ~ NA_real_,
+    TRUE ~ 0
+  ))
 
-## ----synth--------------------------------------------------------------------
-library(synthpop)  
-syn_df <- syn(df,seed=4321)
-#### synthetic data
-synthetic_news_data <- syn_df$syn
-glimpse(synthetic_news_data)
+## -----------------------------------------------------------------------------
+rr_news <- NEWS_var |>
+  dplyr::mutate(resp_rate = as.numeric(resp)) |>
+  dplyr::mutate(news = dplyr::case_when(
+    resp_rate <= 8 | resp_rate >= 25 ~ 3,
+    resp_rate %in% c(21:24) ~ 2,
+    resp_rate %in% c(9:11) ~ 1,
+    !is.numeric(resp_rate) ~ NA_real_,
+    TRUE ~ 0
+  ))
 
+## -----------------------------------------------------------------------------
+NEWS_var |>
+  dplyr::mutate(news = dplyr::case_when(
+    sat <= 91 ~ 3,
+    sat %in% c(92:93) ~ 2,
+    sat %in% c(94:95) ~ 1,
+    !is.numeric(sat) ~ NA_real_,
+    TRUE ~ 0
+  ))
 
-## ----visuals------------------------------------------------------------------
-library(ggplot2)
-#Create temperature tibbles to compare observed vs synthetically generated labels
-obs <- tibble(label="observed_data", value = df$temp)
-synth <- tibble(label="synthetic_data",value = synthetic_news_data$temp)
-
-#Merge the frames together to get a comparison
-merged <- obs %>% 
-  bind_rows(synth)
-
-#Create the plot
-plot <- merged %>% 
-  ggplot(aes(value, fill = label)) +
-  geom_histogram(alpha = 0.9, position = 'identity')  + theme_minimal() + 
-  scale_fill_manual(values=c("#BCBDC1", "#2061AC")) +
-  labs(title="Observed vs Synthetically NEWS values",
-       subtitle="Based on NEWS Temperature score",
-       x="NEWS Temperature Score", y="Score frequency") + 
-  theme(legend.position = "none")
-
-print(plot)
-
+## -----------------------------------------------------------------------------
+NEWS_var |>
+  dplyr::mutate(news = dplyr::case_when(
+    temp <= 35 ~ 3,
+    temp >= 39.1 ~ 2,
+    temp %in% c(38.1:39, 35.1:36) ~ 1,
+    !is.numeric(temp) ~ NA_real_,
+    TRUE ~ 0
+  ))
 

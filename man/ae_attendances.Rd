@@ -8,12 +8,18 @@
 Tibble with six columns
 \describe{
 \item{period}{The month that this data relates to}
-\item{org_code}{The \href{https://digital.nhs.uk/services/organisation-data-service}{ODS} code for this provider}
-\item{type}{The \href{https://web.archive.org/web/20200128111444/https://www.datadictionary.nhs.uk/data_dictionary/attributes/a/acc/accident_and_emergency_department_type_de.asp}{department type}.
+\item{org_code}{The
+\href{https://digital.nhs.uk/services/organisation-data-service}{ODS}
+code for this provider}
+\item{type}{The
+\href{https://web.archive.org/web/20200128111444/https://www.datadictionary.nhs.uk/data_dictionary/attributes/a/acc/accident_and_emergency_department_type_de.asp}{department type}.
             either 1, 2 or other}
-\item{attendances}{the number of patients who attended this department in this month}
-\item{breaches}{the number of patients who breaches the 4 hour target in this month}
-\item{admissions}{the number of patients admitted from A&E to the hospital in this month}
+\item{attendances}{the number of patients who attended this department in
+this month}
+\item{breaches}{the number of patients who breaches the 4 hour target in
+this month}
+\item{admissions}{the number of patients admitted from A&E to the hospital
+in this month}
 }
 }
 \source{
@@ -28,11 +34,14 @@ in England for the years 2016/17 through 2018/19 (Apr-Mar). The data has been
 tidied to be easily usable within the tidyverse of packages.
 }
 \details{
-Data sourced from \href{https://www.england.nhs.uk/statistics/statistical-work-areas/ae-waiting-times-and-activity/}{NHS England Statistical Work Areas}
-which is available under the \href{https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/}{Open Government Licence v3.0}
+Data sourced from
+\href{https://www.england.nhs.uk/statistics/statistical-work-areas/ae-waiting-times-and-activity/}{NHS England Statistical Work Areas}
+which is available under the
+\href{https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/}{Open Government Licence v3.0}
 }
 \examples{
 data(ae_attendances)
+
 library(dplyr)
 library(ggplot2)
 library(scales)
@@ -56,9 +65,11 @@ ae_attendances \%>\%
   filter(any(type == "1")) \%>\%
   summarise_at(vars(attendances, breaches), sum) \%>\%
   arrange(desc(attendances)) \%>\%
-  mutate(performance = 1 - breaches / attendances,
-         overall_performance = 1 - sum(breaches) / sum(attendances),
-         rank = rank(-performance, ties.method = "first") / n()) \%>\%
+  mutate(
+    performance = 1 - breaches / attendances,
+    overall_performance = 1 - sum(breaches) / sum(attendances),
+    rank = rank(-performance, ties.method = "first") / n()
+  ) \%>\%
   ggplot(aes(rank, performance)) +
   geom_vline(xintercept = c(0.25, 0.5, 0.75), linetype = "dotted") +
   geom_hline(yintercept = 0.95, colour = "red") +
@@ -66,11 +77,15 @@ ae_attendances \%>\%
   geom_point() +
   scale_y_continuous(labels = percent) +
   theme_minimal() +
-  theme(panel.grid = element_blank(),
-        axis.text.x = element_blank()) +
-  labs(title = "4 Hour performance by trust",
-       subtitle = "Apr-16 through Mar-19",
-       x = "", y = "")
+  theme(
+    panel.grid = element_blank(),
+    axis.text.x = element_blank()
+  ) +
+  labs(
+    title = "4 Hour performance by trust",
+    subtitle = "Apr-16 through Mar-19",
+    x = "", y = ""
+  )
 
 }
 \keyword{a&e}
